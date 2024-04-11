@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en" itemscope itemtype="http://schema.org/WebPage">
+  <head>
+    
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+ 
+
+
+      <title>Building a Perl Module in OBS - </title>
+
+  <meta name="description" content="Introduction The Open Build Service is used to build all packages for the SUSE operating system family. It can also be used to build other package formats.
+In this post I want to show you how you can setup a project to build your perl module(s) in OBS. Some parts might not be that intuitive, so I documented everything with screenshots.
+In my next post I will show how you can setup your package to automatically build on pull requests."><script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "WebSite",
+    "name": "Tina\u0027s Blog",
+    
+    "url": "https:\/\/perlpunk.github.io\/"
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Organization",
+  "name": "",
+  "url": "https:\/\/perlpunk.github.io\/"
+  
+  
+  
+  
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+        "@type": "ListItem",
+        "position": 1,
+        "item": {
+          "@id": "https:\/\/perlpunk.github.io\/",
+          "name": "home"
+        }
+    },{
+        "@type": "ListItem",
+        "position": 3,
+        "item": {
+          "@id": "https:\/\/perlpunk.github.io\/posts\/2024-04-building-a-perl-module-in-obs\/",
+          "name": "Building a perl module in obs"
+        }
+    }]
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Article",
+  "author": {
+    "name" : ""
+  },
+  "headline": "Building a Perl Module in OBS",
+  "description" : "Introduction The Open Build Service is used to build all packages for the SUSE operating system family. It can also be used to build other package formats.\nIn this post I want to show you how you can setup a project to build your perl module(s) in OBS. Some parts might not be that intuitive, so I documented everything with screenshots.\nIn my next post I will show how you can setup your package to automatically build on pull requests.",
+  "inLanguage" : "en",
+  "wordCount":  901 ,
+  "datePublished" : "2024-04-11T20:45:17",
+  "dateModified" : "2024-04-11T20:45:17",
+  "image" : "https:\/\/perlpunk.github.io\/",
+  "keywords" : [ "software engineering" ],
+  "mainEntityOfPage" : "https:\/\/perlpunk.github.io\/posts\/2024-04-building-a-perl-module-in-obs\/",
+  "publisher" : {
+    "@type": "Organization",
+    "name" : "https:\/\/perlpunk.github.io\/",
+    "logo" : {
+        "@type" : "ImageObject",
+        "url" : "https:\/\/perlpunk.github.io\/",
+        "height" :  60 ,
+        "width" :  60
+    }
+  }
+}
+</script>
+
+<meta property="og:title" content="Building a Perl Module in OBS" />
+<meta property="og:description" content="Introduction The Open Build Service is used to build all packages for the SUSE operating system family. It can also be used to build other package formats.
+In this post I want to show you how you can setup a project to build your perl module(s) in OBS. Some parts might not be that intuitive, so I documented everything with screenshots.
+In my next post I will show how you can setup your package to automatically build on pull requests.">
+<meta property="og:url" content="https://perlpunk.github.io/posts/2024-04-building-a-perl-module-in-obs/" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Tina&#39;s Blog" />
+
+  <meta name="twitter:title" content="Building a Perl Module in OBS" />
+  <meta name="twitter:description" content="Introduction The Open Build Service is used to build all packages for the SUSE operating system family. It can also be used to build other package formats.
+In this post I want to show you how you can …">
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="generator" content="Hugo 0.124.1">
+  <link rel="alternate" href="https://perlpunk.github.io/index.xml" type="application/rss+xml" title="Tina&#39;s Blog"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/katex.min.css" integrity="sha384-3UiQGuEI4TTMaFmGIZumfRPtfKQ3trwQE2JgosJxCnGmQpL/lJdjpcHkaaFwHlcI" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous"><link rel="stylesheet" href="https://perlpunk.github.io/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" /><link rel="stylesheet" href="https://perlpunk.github.io/css/syntax.css" /><link rel="stylesheet" href="https://perlpunk.github.io/css/codeblock.css" /><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
+
+  </head>
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://perlpunk.github.io/">Tina&#39;s Blog</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li>
+              <a title="Blog" href="https://perlpunk.github.io/">Blog</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="About" href="https://perlpunk.github.io/">About</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="Search" href="https://perlpunk.github.io/">Search</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="Tags" href="https://perlpunk.github.io/tags/">Tags</a>
+            </li>
+          
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    
+
+  </div>
+</nav>
+
+
+
+
+    
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+
+  
+  
+  
+
+
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+    
+    <div class="intro-header no-img">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="posts-heading">
+              
+                <h1>Building a Perl Module in OBS</h1>
+              
+              
+                <hr class="small">
+              
+              
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+  </header>
+
+
+    
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+        <h2 id="introduction">Introduction</h2>
+<p>The Open Build Service is used to build all packages for the SUSE operating
+system family. It can also be used to build other package formats.</p>
+<p>In this post I want to show you how you can setup a project to build your
+perl module(s) in OBS. Some parts might not be that intuitive, so I documented
+everything with screenshots.</p>
+<p>In my next post I will show how you can setup your package to automatically
+build on pull requests.</p>
+<p>In another post, I want to show how we at SUSE actually fetch and update a
+large list of perl modules automatically in our <code>devel:languages:perl</code> repo.
+Your perl module might already be in the list!</p>
+<h2 id="prerequisites">Prerequisites</h2>
+<p>First you should create an account. This is not covered in this post, but should
+be easy enough :)</p>
+<p>Note that OBS website has two layouts. For smaller screens, there is a
+horizontal bar at the bottom. Otherwise there will be a vertical bar on the
+left.</p>
+<p>I used the small layout in my screenshots.</p>
+<p>You need <code>git</code> and <code>osc</code>.</p>
+<p>The source of your module should be in GitHub. OBS also supports other
+SCMs, but for this post I used GitHub.</p>
+<p>Many of the GUI actions I show are also available in the <code>osc</code> command line
+tool.</p>
+<h2 id="create-a-project-and-package">Create a project and package</h2>
+<p>First, go to your home project.</p>
+<p>Go to the nevigation item &ldquo;Your Home Project&rdquo;. It should be empty so far.</p>
+<p><img alt="OBS - Home Project" src="https://perlpunk.github.io/new-obs-project/010-home-project.png"></p>
+<p>Then go to &ldquo;Subprojects&rdquo; and click on &ldquo;Create Subproject&rdquo; under &ldquo;Actions&rdquo;.</p>
+<p><img alt="OBS - Create subproject" src="https://perlpunk.github.io/new-obs-project/020-create-subproject.png"></p>
+<p>Chose a name for your perl modules project and click &ldquo;Accept&rdquo;.
+I used <code>home:tinita:perlmodules</code>.</p>
+<p><img alt="OBS - Create subproject" src="https://perlpunk.github.io/new-obs-project/021-create-subproject.png"></p>
+<p>In your new project, you can now click on &ldquo;Create Package&rdquo;.</p>
+<p><img alt="OBS - Subproject" src="https://perlpunk.github.io/new-obs-project/030-subproject.png"></p>
+<p>In my example I&rsquo;m using my perl module <a href="https://metacpan.org/dist/YAML-PP">YAML::PP</a>.</p>
+<p>The naming convention for perl modules in SUSE is to prefix it with <code>perl-</code>, so
+I use <code>perl-YAML-PP</code>. Click on &ldquo;Create&rdquo;.</p>
+<p><img alt="OBS - Create package" src="https://perlpunk.github.io/new-obs-project/040-create-package.png"></p>
+<p>You should see an empty package now.</p>
+<p><img alt="OBS - Created package" src="https://perlpunk.github.io/new-obs-project/050-created-package.png"></p>
+<p>Now you can select repositories it should be built on. Here I used
+openSUSE Leap 15.5 and 15.6 plus openSUSE Tumbleweed.</p>
+<p><img alt="OBS - Select repositories" src="https://perlpunk.github.io/new-obs-project/060-select-repositories.png"></p>
+<h2 id="add-files-to-your-package">Add files to your package</h2>
+<p>To add files to it, I switch to the command line.</p>
+<p>For working with OBS projects on the command line, you need to install the tool
+<code>osc</code>. It&rsquo;s available on many Linux distributions.</p>
+<p>First I&rsquo;m checking out the <code>perl-YAML-PP</code> package.</p>
+<pre tabindex="0"><code>~% mkdir osc
+~% cd osc
+~/osc% osc co home:tinita:perlmodules/perl-YAML-PP
+A    home:tinita:perlmodules
+A    home:tinita:perlmodules/perl-YAML-PP
+At revision None.
+~/osc% cd home:tinita:perlmodules/perl-YAML-PP
+~/osc/home:tinita:perlmodules/perl-YAML-PP%
+</code></pre><p>To let OBS fetch the source code automatically from GitHub, I need to create
+a <code>_service</code> file.
+For demo purposes I created a temporary repository <code>https://github.com/perlpunk/gpw2024-demo</code>
+to hold a copy of the YAML::PP source:</p>
+<pre tabindex="0"><code>~/osc/home:tinita:perlmodules/perl-YAML-PP% cat _service
+&lt;services&gt;
+  &lt;service name=&#34;obs_scm&#34;&gt;
+    &lt;param name=&#34;url&#34;&gt;https://github.com/perlpunk/gpw2024-demo&lt;/param&gt;
+    &lt;param name=&#34;revision&#34;&gt;main&lt;/param&gt;
+    &lt;param name=&#34;versionprefix&#34;&gt;3.14&lt;/param&gt;
+    &lt;param name=&#34;versionformat&#34;&gt;%ct.%h&lt;/param&gt;
+    &lt;param name=&#34;scm&#34;&gt;git&lt;/param&gt;
+    &lt;param name=&#34;changesgenerate&#34;&gt;enable&lt;/param&gt;
+    &lt;param name=&#34;changesauthor&#34;&gt;tina.mueller@suse.com&lt;/param&gt;
+    &lt;param name=&#34;filename&#34;&gt;perl-YAML-PP&lt;/param&gt;
+  &lt;/service&gt;
+  &lt;service name=&#34;set_version&#34;/&gt;
+  &lt;service name=&#34;tar&#34; mode=&#34;buildtime&#34;/&gt;
+  &lt;service name=&#34;recompress&#34; mode=&#34;buildtime&#34;&gt;
+    &lt;param name=&#34;compression&#34;&gt;xz&lt;/param&gt;
+    &lt;param name=&#34;file&#34;&gt;*.tar&lt;/param&gt;
+  &lt;/service&gt;
+&lt;/services&gt;
+</code></pre><p>Now I need a <code>.spec</code> file so that rpm can build a package:</p>
+<pre tabindex="0"><code>~/osc/home:tinita:perlmodules/perl-YAML-PP% cat perl-YAML-PP.spec
+Name:           perl-YAML-PP
+Version:        3.14
+Release:        0
+License:        Artistic-1.0 OR GPL-1.0-or-later
+Summary:        YAML 1.2 Processor
+# Generated by _service
+Source0:        %{name}-%{version}.tar.xz
+BuildArch:      noarch
+BuildRequires:  perl
+BuildRequires:  perl-macros
+BuildRequires:  perl(Module::Load)
+BuildRequires:  perl(Test::More) &gt;= 0.98
+BuildRequires:  perl(Test::Warn)
+Requires:       perl(Module::Load)
+%{perl_requires}
+
+%description
+YAML::PP is a modular YAML processor.
+...
+
+%prep
+%autosetup  -n %{name}-%{version}
+
+%build
+perl Makefile.PL INSTALLDIRS=vendor
+%make_build
+
+%check
+make test
+
+%install
+%perl_make_install
+%perl_process_packlist
+%perl_gen_filelist
+
+%files -f %{name}.files
+%doc Changes CONTRIBUTING.md examples Makefile.dev README.md
+</code></pre><p>Note that I used an arbitrary version <code>3.14</code> here. How to automatically retrieve
+a version from your sources is not covered here. But for the purposes of
+checking that the module successfully builds a static version is fine.</p>
+<p>Now I commit my newly added files:</p>
+<pre tabindex="0"><code>~/osc/home:tinita:perlmodules/perl-YAML-PP% osc st
+?    _service
+?    perl-YAML-PP.spec
+
+~/osc/home:tinita:perlmodules/perl-YAML-PP% osc add _service perl-YAML-PP.spec
+A    _service
+A    perl-YAML-PP.spec
+
+~/osc/home:tinita:perlmodules/perl-YAML-PP% osc ci -m &#34;Add spec and _service&#34;
+Sending    _service
+Sending    perl-YAML-PP.spec
+Transmitting file data ..
+Committed revision 1.
+Waiting for server side source service run
+........................................................
+At revision 1.
+</code></pre><p>Looking at the project in OBS, I can see the <code>_service</code> and the <code>.spec</code> file,
+but additionally some generated files:</p>
+<p><img alt="OBS - Package - First commit" src="https://perlpunk.github.io/new-obs-project/070-package-first-commit.png"></p>
+<p>And it already started to build!</p>
+<p><img alt="OBS - Package - First commit - build status" src="https://perlpunk.github.io/new-obs-project/080-package-first-commit-build-status.png"></p>
+<h2 id="automatically-build-new-commits">Automatically build new commits</h2>
+<p>It&rsquo;s possible to click on &ldquo;Trigger Services&rdquo; to fetch sources and rebuild,
+but that can be automated.</p>
+<p>For that I need to create an OBS Service Token and a GitHub Webhook.</p>
+<p>First I create the token. On your homepage, go to &ldquo;Manage your tokens&rdquo;.</p>
+<p><img alt="OBS - Home - Actions" src="https://perlpunk.github.io/new-obs-project/090-obs-home-actions.png"></p>
+<p>Click on &ldquo;Create Token&rdquo;.</p>
+<p><img alt="OBS - Tokens" src="https://perlpunk.github.io/new-obs-project/100-obs-tokens.png"></p>
+<p>The token type is <code>service</code>. Choose a description so that you can find that
+token easily when you later have more tokens.</p>
+<p>Add the perl modules project, in my case <code>home:tinita:perlmodules</code> and
+the package name <code>perl-YAML-PP</code> and click &ldquo;Create&rdquo;.</p>
+<p><img alt="OBS - Create Service Token" src="https://perlpunk.github.io/new-obs-project/110-obs-create-service-token.png"></p>
+<p>You will see a Token Id and a secret (marked red in the screenshot).
+Note down both.</p>
+<p><img alt="OBS - Created Service Token" src="https://perlpunk.github.io/new-obs-project/120-obs-created-service-token.png"></p>
+<p>Now go to the Settings of your GitHub project and go to Webhooks.</p>
+<p><img alt="GitHub - Webhooks" src="https://perlpunk.github.io/new-obs-project/130-github-settings-webhooks.png"></p>
+<p>Add a webhook. The payload URL should be <code>https://build.opensuse.org/trigger/webhook?id=$ID</code>.</p>
+<p>The Content type should be <code>application/json</code>.</p>
+<p>Add the secret.</p>
+<p>Click on &ldquo;Add webhook&rdquo;.</p>
+<p><img alt="GitHub - Add OBS Webhook" src="https://perlpunk.github.io/new-obs-project/140-github-add-obs-webhook.png"></p>
+<p>You should see a message that the webhook was created successfully.</p>
+<p><img alt="GitHub - Created OBS Webhook" src="https://perlpunk.github.io/new-obs-project/150-github-created-obs-webhook.png"></p>
+<p>In the OBS project, you should see that the service was triggered already by
+the first Webhook ping.</p>
+<p><img alt="OBS - Package - Service Triggered" src="https://perlpunk.github.io/new-obs-project/160-obs-service-triggered.png"></p>
+<p>Now with every commit to the <code>main</code> branch the OBS project should be rebuilt.</p>
+<p>It&rsquo;s also possible to be notified of buil failures for projects. Look at the
+&ldquo;Watchlist&rdquo; and &ldquo;Notifications&rdquo; items in the top navigation.</p>
+<p>I hope that was helpful.</p>
+<p>In the next post I will show how to build the module on every pull request.</p>
+
+
+        
+          <div class="blog-tags">
+            
+              <a href="https://perlpunk.github.io//tags/software-engineering/">software engineering</a>&nbsp;
+            
+          </div>
+        
+
+        
+
+        
+      </article>
+
+      
+        <ul class="pager blog-pager">
+          
+          
+        </ul>
+      
+
+
+      
+        
+        
+      
+
+    </div>
+  </div>
+</div>
+
+      
+<footer>
+  <div class="container">
+    
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+          
+          <li>
+            <a href="" title="RSS">
+              <span class="fa-stack fa-lg">
+                <i class="fas fa-circle fa-stack-2x"></i>
+                <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          
+
+          &nbsp;&bull;&nbsp;&copy;
+          
+            2024
+          
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="https://perlpunk.github.io/">Tina&#39;s Blog</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="https://gohugo.io">Hugo v0.124.1</a> powered &nbsp;&bull;&nbsp; Theme <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a> adapted from <a href="https://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer><script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/katex.min.js" integrity="sha384-G0zcxDFp5LWZtDuRMnBkk3EphCK1lhEf4UEyEM693ka574TZGwo4IWwS6QLzM/2t" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
+<script src="https://code.jquery.com/jquery-3.7.0.slim.min.js" integrity="sha384-w5y/xIeYixWvfM+A1cEbmHPURnvyqmVg5eVENruEdDjcyRLUSNej7512JQGspFUr" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+
+<script src="https://perlpunk.github.io/js/main.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js" integrity="sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js" integrity="sha384-m67o7SkQ1ALzKZIFh4CiTA8tmadaujiTa9Vu+nqPSwDOqHrDmxLezTdFln8077+q" crossorigin="anonymous"></script><script src="https://perlpunk.github.io/js/load-photoswipe.js"></script>
+
+
+
+
+
+
+
+
+
+    
+  </body>
+</html>
+

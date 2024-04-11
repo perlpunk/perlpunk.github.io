@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tina&#39;s Blog</title>
+    <link>https://perlpunk.github.io/</link>
+    <description>Recent content on Tina&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Thu, 11 Apr 2024 20:45:17 +0200</lastBuildDate>
+    <atom:link href="https://perlpunk.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Building a Perl Module in OBS</title>
+      <link>https://perlpunk.github.io/posts/2024-04-building-a-perl-module-in-obs/</link>
+      <pubDate>Thu, 11 Apr 2024 20:45:17 +0200</pubDate>
+      <guid>https://perlpunk.github.io/posts/2024-04-building-a-perl-module-in-obs/</guid>
+      <description>Introduction The Open Build Service is used to build all packages for the SUSE operating system family. It can also be used to build other package formats.&#xA;In this post I want to show you how you can setup a project to build your perl module(s) in OBS. Some parts might not be that intuitive, so I documented everything with screenshots.&#xA;In my next post I will show how you can setup your package to automatically build on pull requests.</description>
+    </item>
+  </channel>
+</rss>
