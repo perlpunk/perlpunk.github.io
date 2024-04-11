@@ -64,7 +64,7 @@ In my next post I will show how you can setup your package to automatically buil
   "headline": "Building a Perl Module in OBS",
   "description" : "Introduction The Open Build Service is used to build all packages for the SUSE operating system family. It can also be used to build other package formats.\nIn this post I want to show you how you can setup a project to build your perl module(s) in OBS. Some parts might not be that intuitive, so I documented everything with screenshots.\nIn my next post I will show how you can setup your package to automatically build on pull requests.",
   "inLanguage" : "en",
-  "wordCount":  901 ,
+  "wordCount":  908 ,
   "datePublished" : "2024-04-11T20:45:17",
   "dateModified" : "2024-04-11T20:45:17",
   "image" : "https:\/\/perlpunk.github.io\/",
@@ -248,8 +248,9 @@ In this post I want to show you how you can …">
     <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
       <article role="main" class="blog-post">
         <h2 id="introduction">Introduction</h2>
-<p>The Open Build Service is used to build all packages for the SUSE operating
-system family. It can also be used to build other package formats.</p>
+<p>The <a href="https://build.opensuse.org/">Open Build Service</a> is used to build all
+packages for the SUSE operating system family. It can also be used to build
+other package formats.</p>
 <p>In this post I want to show you how you can setup a project to build your
 perl module(s) in OBS. Some parts might not be that intuitive, so I documented
 everything with screenshots.</p>
@@ -259,8 +260,8 @@ build on pull requests.</p>
 large list of perl modules automatically in our <code>devel:languages:perl</code> repo.
 Your perl module might already be in the list!</p>
 <h2 id="prerequisites">Prerequisites</h2>
-<p>First you should create an account. This is not covered in this post, but should
-be easy enough :)</p>
+<p>First you should create an account <a href="https://build.opensuse.org/">here</a>. This is
+not covered in this post, but should be easy enough :)</p>
 <p>Note that OBS website has two layouts. For smaller screens, there is a
 horizontal bar at the bottom. Otherwise there will be a vertical bar on the
 left.</p>
@@ -273,6 +274,7 @@ tool.</p>
 <h2 id="create-a-project-and-package">Create a project and package</h2>
 <p>First, go to your home project.</p>
 <p>Go to the nevigation item &ldquo;Your Home Project&rdquo;. It should be empty so far.</p>
+<p>The URL would look like <code>https://build.opensuse.org/project/show/home:yourusername</code>.</p>
 <p><img alt="OBS - Home Project" src="https://perlpunk.github.io/new-obs-project/010-home-project.png"></p>
 <p>Then go to &ldquo;Subprojects&rdquo; and click on &ldquo;Create Subproject&rdquo; under &ldquo;Actions&rdquo;.</p>
 <p><img alt="OBS - Create subproject" src="https://perlpunk.github.io/new-obs-project/020-create-subproject.png"></p>
