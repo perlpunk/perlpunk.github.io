@@ -64,7 +64,7 @@ In my next post I will show how you can setup your package to automatically buil
   "headline": "Building a Perl Module in OBS",
   "description" : "Introduction The Open Build Service is used to build all packages for the SUSE operating system family. It can also be used to build other package formats.\nIn this post I want to show you how you can setup a project to build your perl module(s) in OBS. Some parts might not be that intuitive, so I documented everything with screenshots.\nIn my next post I will show how you can setup your package to automatically build on pull requests.",
   "inLanguage" : "en",
-  "wordCount":  908 ,
+  "wordCount":  934 ,
   "datePublished" : "2024-04-11T20:45:17",
   "dateModified" : "2024-04-11T20:45:17",
   "image" : "https:\/\/perlpunk.github.io\/avatar.jpeg",
@@ -283,7 +283,7 @@ SCMs, but for this post I used GitHub.</p>
 tool.</p>
 <h2 id="create-a-project-and-package">Create a project and package</h2>
 <p>First, go to your home project.</p>
-<p>Go to the nevigation item &ldquo;Your Home Project&rdquo;. It should be empty so far.</p>
+<p>Go to the navigation item &ldquo;Your Home Project&rdquo;. It should be empty so far.</p>
 <p>The URL would look like <code>https://build.opensuse.org/project/show/home:yourusername</code>.</p>
 <p><img alt="OBS - Home Project" src="https://perlpunk.github.io/new-obs-project/010-home-project.png"></p>
 <p>Then go to &ldquo;Subprojects&rdquo; and click on &ldquo;Create Subproject&rdquo; under &ldquo;Actions&rdquo;.</p>
@@ -301,6 +301,9 @@ I use <code>perl-YAML-PP</code>. Click on &ldquo;Create&rdquo;.</p>
 <p><img alt="OBS - Created package" src="https://perlpunk.github.io/new-obs-project/050-created-package.png"></p>
 <p>Now you can select repositories it should be built on. Here I used
 openSUSE Leap 15.5 and 15.6 plus openSUSE Tumbleweed.</p>
+<p>For that go back to the project <code>home:user:perlmodules</code>.  You can&rsquo;t add
+repositories for a package.</p>
+<p>In the project click on &ldquo;Repositories&rdquo; and &ldquo;Add from a Distribution&rdquo;.</p>
 <p><img alt="OBS - Select repositories" src="https://perlpunk.github.io/new-obs-project/060-select-repositories.png"></p>
 <h2 id="add-files-to-your-package">Add files to your package</h2>
 <p>To add files to it, I switch to the command line.</p>
@@ -431,7 +434,7 @@ Note down both.</p>
 the first Webhook ping.</p>
 <p><img alt="OBS - Package - Service Triggered" src="https://perlpunk.github.io/new-obs-project/160-obs-service-triggered.png"></p>
 <p>Now with every commit to the <code>main</code> branch the OBS project should be rebuilt.</p>
-<p>It&rsquo;s also possible to be notified of buil failures for projects. Look at the
+<p>It&rsquo;s also possible to be notified of build failures for projects. Look at the
 &ldquo;Watchlist&rdquo; and &ldquo;Notifications&rdquo; items in the top navigation.</p>
 <p>I hope that was helpful.</p>
 <p>In the next post I will show how to build the module on every pull request.</p>
