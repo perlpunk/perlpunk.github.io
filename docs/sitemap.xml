@@ -2,19 +2,22 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://perlpunk.github.io/posts/2024-04-building-a-perl-module-in-obs/</loc>
-    <lastmod>2024-04-11T22:46:35+02:00</lastmod>
-  </url><url>
     <loc>https://perlpunk.github.io/posts/</loc>
-    <lastmod>2024-04-11T22:46:35+02:00</lastmod>
+    <lastmod>2024-04-11T23:11:55+02:00</lastmod>
   </url><url>
     <loc>https://perlpunk.github.io/tags/software-engineering/</loc>
-    <lastmod>2024-04-11T22:46:35+02:00</lastmod>
+    <lastmod>2024-04-11T23:11:55+02:00</lastmod>
   </url><url>
     <loc>https://perlpunk.github.io/tags/</loc>
-    <lastmod>2024-04-11T22:46:35+02:00</lastmod>
+    <lastmod>2024-04-11T23:11:55+02:00</lastmod>
   </url><url>
     <loc>https://perlpunk.github.io/</loc>
+    <lastmod>2024-04-11T23:11:55+02:00</lastmod>
+  </url><url>
+    <loc>https://perlpunk.github.io/posts/2024-04-obs-as-a-ci-for-perl-modules/</loc>
+    <lastmod>2024-04-11T23:11:55+02:00</lastmod>
+  </url><url>
+    <loc>https://perlpunk.github.io/posts/2024-04-building-a-perl-module-in-obs/</loc>
     <lastmod>2024-04-11T22:46:35+02:00</lastmod>
   </url><url>
     <loc>https://perlpunk.github.io/categories/</loc>

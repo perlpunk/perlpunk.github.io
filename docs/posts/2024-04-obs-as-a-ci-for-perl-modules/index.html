@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en" itemscope itemtype="http://schema.org/WebPage">
+  <head>
+    
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+ 
+
+
+      <title>Using OBS as a CI for Perl Modules - </title>
+
+  <meta name="description" content="Introduction In my previous Building a Perl Module in OBS post I showed how you can build rpm packages in OBS from your perl module(s). Every commit on the main branch will trigger a new build.
+Now I will show how to automatically build the package from a GitHub Pull Request. It&rsquo;s recommended to read the previous post first.
+For that I need to add an OBS Workflow. I need a GitHub Token, an OBS Token and a workflow YAML file."><script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "WebSite",
+    "name": "Tina\u0027s Blog",
+    
+    "url": "https:\/\/perlpunk.github.io\/"
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Organization",
+  "name": "",
+  "url": "https:\/\/perlpunk.github.io\/"
+  
+  
+  
+  
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+        "@type": "ListItem",
+        "position": 1,
+        "item": {
+          "@id": "https:\/\/perlpunk.github.io\/",
+          "name": "home"
+        }
+    },{
+        "@type": "ListItem",
+        "position": 3,
+        "item": {
+          "@id": "https:\/\/perlpunk.github.io\/posts\/2024-04-obs-as-a-ci-for-perl-modules\/",
+          "name": "Using obs as a ci for perl modules"
+        }
+    }]
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Article",
+  "author": {
+    "name" : ""
+  },
+  "headline": "Using OBS as a CI for Perl Modules",
+  "description" : "Introduction In my previous Building a Perl Module in OBS post I showed how you can build rpm packages in OBS from your perl module(s). Every commit on the main branch will trigger a new build.\nNow I will show how to automatically build the package from a GitHub Pull Request. It\u0026rsquo;s recommended to read the previous post first.\nFor that I need to add an OBS Workflow. I need a GitHub Token, an OBS Token and a workflow YAML file.",
+  "inLanguage" : "en",
+  "wordCount":  466 ,
+  "datePublished" : "2024-04-11T23:11:55",
+  "dateModified" : "2024-04-11T23:11:55",
+  "image" : "https:\/\/perlpunk.github.io\/avatar.jpeg",
+  "keywords" : [ "software engineering" ],
+  "mainEntityOfPage" : "https:\/\/perlpunk.github.io\/posts\/2024-04-obs-as-a-ci-for-perl-modules\/",
+  "publisher" : {
+    "@type": "Organization",
+    "name" : "https:\/\/perlpunk.github.io\/",
+    "logo" : {
+        "@type" : "ImageObject",
+        "url" : "https:\/\/perlpunk.github.io\/avatar.jpeg",
+        "height" :  60 ,
+        "width" :  60
+    }
+  }
+}
+</script>
+
+<meta property="og:title" content="Using OBS as a CI for Perl Modules" />
+<meta property="og:description" content="Introduction In my previous Building a Perl Module in OBS post I showed how you can build rpm packages in OBS from your perl module(s). Every commit on the main branch will trigger a new build.
+Now I will show how to automatically build the package from a GitHub Pull Request. It&rsquo;s recommended to read the previous post first.
+For that I need to add an OBS Workflow. I need a GitHub Token, an OBS Token and a workflow YAML file.">
+<meta property="og:image" content="https://perlpunk.github.io/avatar.jpeg" />
+<meta property="og:url" content="https://perlpunk.github.io/posts/2024-04-obs-as-a-ci-for-perl-modules/" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Tina&#39;s Blog" />
+
+  <meta name="twitter:title" content="Using OBS as a CI for Perl Modules" />
+  <meta name="twitter:description" content="Introduction In my previous Building a Perl Module in OBS post I showed how you can build rpm packages in OBS from your perl module(s). Every commit on the main branch will trigger a new build.
+Now I …">
+  <meta name="twitter:image" content="https://perlpunk.github.io/avatar.jpeg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link href='https://perlpunk.github.io/avatar.jpeg' rel='icon' type='image/x-icon'/>
+  <meta name="generator" content="Hugo 0.124.1">
+  <link rel="alternate" href="https://perlpunk.github.io/index.xml" type="application/rss+xml" title="Tina&#39;s Blog"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/katex.min.css" integrity="sha384-3UiQGuEI4TTMaFmGIZumfRPtfKQ3trwQE2JgosJxCnGmQpL/lJdjpcHkaaFwHlcI" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous"><link rel="stylesheet" href="https://perlpunk.github.io/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" /><link rel="stylesheet" href="https://perlpunk.github.io/css/syntax.css" /><link rel="stylesheet" href="https://perlpunk.github.io/css/codeblock.css" /><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
+
+  </head>
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://perlpunk.github.io/">Tina&#39;s Blog</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li>
+              <a title="Blog" href="https://perlpunk.github.io/">Blog</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="About" href="https://perlpunk.github.io/">About</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="Search" href="https://perlpunk.github.io/">Search</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="Tags" href="https://perlpunk.github.io/tags/">Tags</a>
+            </li>
+          
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    
+      <div class="avatar-container">
+        <div class="avatar-img-border">
+          <a title="Tina&#39;s Blog" href="https://perlpunk.github.io/">
+            <img class="avatar-img" src="https://perlpunk.github.io/avatar.jpeg" alt="Tina&#39;s Blog" />
+          </a>
+        </div>
+      </div>
+    
+
+  </div>
+</nav>
+
+
+
+
+    
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+
+  
+  
+  
+
+
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+    
+    <div class="intro-header no-img">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="posts-heading">
+              
+                <h1>Using OBS as a CI for Perl Modules</h1>
+              
+              
+                <hr class="small">
+              
+              
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+  </header>
+
+
+    
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+        <h2 id="introduction">Introduction</h2>
+<p>In my previous <a href="../2024-04-building-a-perl-module-in-obs/">Building a Perl Module in
+OBS</a> post I showed how you can
+build rpm packages in OBS from your perl module(s). Every commit on the main
+branch will trigger a new build.</p>
+<p>Now I will show how to automatically build the package from a GitHub Pull
+Request. It&rsquo;s recommended to read the previous post first.</p>
+<p>For that I need to add an OBS Workflow. I need a GitHub Token, an OBS Token
+and a workflow YAML file.</p>
+<h2 id="create-github-access-token">Create Github Access Token</h2>
+<p>Go to your <a href="https://github.com/settings/profile">GitHub Settings</a> - Developer
+Settings - <a href="https://github.com/settings/tokens">Personal Access Tokens</a> and click on
+&ldquo;Generate new token (classic)&rdquo;.</p>
+<p>Add a meaningful description like &ldquo;Token for OBS workflow for
+home:user:perlmodules/perl-YAML-PP&rdquo;.</p>
+<p>Enable the scope &ldquo;repo&rdquo;.</p>
+<p>Click on &ldquo;Generate token&rdquo;.</p>
+<p><img alt="OBS - Home Project" src="https://perlpunk.github.io/create-obs-workflow/010-github-new-token.png"></p>
+<p>You should see a message that the token was generated and a secret (marked
+blue in the screenshot). Note that down.</p>
+<p><img alt="OBS - Home Project" src="https://perlpunk.github.io/create-obs-workflow/020-github-created-token.png"></p>
+<h2 id="generate-obs-workflow-token">Generate OBS Workflow token</h2>
+<p>Now go to <a href="https://build.opensuse.org/my/tokens">My tokens</a> in OBS and create
+a new token.</p>
+<p><img alt="OBS - Home Project" src="https://perlpunk.github.io/create-obs-workflow/030-obs-tokens.png"></p>
+<p>The token type is &ldquo;workflow&rdquo;. Add a meaningful description, e.g. &ldquo;Pull requests
+for home:user:perlmodules/perl-YAML-PP&rdquo;.</p>
+<p>Paste the GitHub Access Token.</p>
+<p>Click on &ldquo;Create&rdquo;.</p>
+<p><img alt="OBS - Home Project" src="https://perlpunk.github.io/create-obs-workflow/040-obs-create-workflow-token.png"></p>
+<p>You should now see a message that the token was successfully created.</p>
+<p>Note down the secret (marked in red) and the trigger url (marked in green).</p>
+<p><img alt="OBS - Home Project" src="https://perlpunk.github.io/create-obs-workflow/050-obs-created-workflow-token.png"></p>
+<h2 id="add-github-webhook">Add GitHub Webhook</h2>
+<p>In your GitHub project, go to Seetings - Webhooks and add a new webhook.</p>
+<p>Paste the trigger url and the secret from the last step.</p>
+<p><img alt="OBS - Home Project" src="https://perlpunk.github.io/create-obs-workflow/060-github-create-webhook.png"></p>
+<p>Check &ldquo;Let me select individual events.&rdquo; and select &ldquo;Push&rdquo; and &ldquo;Pull requests&rdquo;.</p>
+<p>Click on &ldquo;Add webhook&rdquo;.</p>
+<p><img alt="OBS - Home Project" src="https://perlpunk.github.io/create-obs-workflow/061-github-create-webhook.png"></p>
+<h2 id="create-workflow-configuration-file">Create Workflow configuration file</h2>
+<p>In your GitHub repository, add a new file at <code>.obs/workflows.yml</code>:</p>
+<pre tabindex="0"><code>pr:
+  steps:
+  - branch_package:
+      source_project: home:tinita:perlmodules
+      source_package: perl-YAML-PP
+      target_project: home:tinita:perlmodules:CI
+  filters:
+    event: pull_request
+</code></pre><p>Commit and push to the main branch.</p>
+<h2 id="create-a-pull-request">Create a Pull request</h2>
+<p>Now everything is ready for getting GitHub OBS workflows checks.</p>
+<p>Create a pull request. Maybe one that makes tests fail ;-)</p>
+<p><img alt="OBS - Home Project" src="https://perlpunk.github.io/create-obs-workflow/070-github-create-pr.png"></p>
+<p>Now go to the subprojects of your <code>home:user:perlmodules</code> project.</p>
+<p>If everything went well, you should see a new subproject there, called
+<code>home:tinita:perlmodules:CI:perlpunk:gpw2024-demo:PR-3</code> in my case.</p>
+<p><img alt="OBS - Home Project" src="https://perlpunk.github.io/create-obs-workflow/080-obs-subprojects.png"></p>
+<p>It should look almost like the original project.</p>
+<p><img alt="OBS - Home Project" src="https://perlpunk.github.io/create-obs-workflow/090-obs-subproject-package.png"></p>
+<p>And it should already start to build!</p>
+<p><img alt="OBS - Home Project" src="https://perlpunk.github.io/create-obs-workflow/091-obs-subproject-package.png"></p>
+<p>If you look at the Pull request now, you should see checks being added, in
+my case five.</p>
+<p>Note that it is a current limitation of OBS that those checks only appear
+when they finish. A pending status is not supported.</p>
+<p><img alt="OBS - Home Project" src="https://perlpunk.github.io/create-obs-workflow/100-github-pr.png"></p>
+<h2 id="troubleshooting">Troubleshooting</h2>
+<p>Things can go wrong in various places, and it&rsquo;s possible that it&rsquo;s not
+your fault.</p>
+<ul>
+<li>Check the GitHub Webhook settings. You can list the triggers and see the
+payload</li>
+<li>Check the OBS Token settings. You can also look at the triggers there</li>
+<li>In some cases, OBS might simply not have been reachable. In that case
+it&rsquo;s necessary to delete the created subproject and retrigger the necessary
+events.</li>
+</ul>
+<p>Have fun with the OBS Workflow!</p>
+
+
+        
+          <div class="blog-tags">
+            
+              <a href="https://perlpunk.github.io//tags/software-engineering/">software engineering</a>&nbsp;
+            
+          </div>
+        
+
+        
+
+        
+      </article>
+
+      
+        <ul class="pager blog-pager">
+          
+            <li class="previous">
+              <a href="https://perlpunk.github.io/posts/2024-04-building-a-perl-module-in-obs/" data-toggle="tooltip" data-placement="top" title="Building a Perl Module in OBS">&larr; Previous Post</a>
+            </li>
+          
+          
+        </ul>
+      
+
+
+      
+        
+        
+      
+
+    </div>
+  </div>
+</div>
+
+      
+<footer>
+  <div class="container">
+    
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+          
+          <li>
+            <a href="" title="RSS">
+              <span class="fa-stack fa-lg">
+                <i class="fas fa-circle fa-stack-2x"></i>
+                <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          
+
+          &nbsp;&bull;&nbsp;&copy;
+          
+            2024
+          
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="https://perlpunk.github.io/">Tina&#39;s Blog</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="https://gohugo.io">Hugo v0.124.1</a> powered &nbsp;&bull;&nbsp; Theme <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a> adapted from <a href="https://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer><script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/katex.min.js" integrity="sha384-G0zcxDFp5LWZtDuRMnBkk3EphCK1lhEf4UEyEM693ka574TZGwo4IWwS6QLzM/2t" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
+<script src="https://code.jquery.com/jquery-3.7.0.slim.min.js" integrity="sha384-w5y/xIeYixWvfM+A1cEbmHPURnvyqmVg5eVENruEdDjcyRLUSNej7512JQGspFUr" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+
+<script src="https://perlpunk.github.io/js/main.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js" integrity="sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js" integrity="sha384-m67o7SkQ1ALzKZIFh4CiTA8tmadaujiTa9Vu+nqPSwDOqHrDmxLezTdFln8077+q" crossorigin="anonymous"></script><script src="https://perlpunk.github.io/js/load-photoswipe.js"></script>
+
+
+
+
+
+
+
+
+
+    
+  </body>
+</html>
+

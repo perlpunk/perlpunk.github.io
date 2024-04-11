@@ -64,7 +64,7 @@ In my next post I will show how you can setup your package to automatically buil
   "headline": "Building a Perl Module in OBS",
   "description" : "Introduction The Open Build Service is used to build all packages for the SUSE operating system family. It can also be used to build other package formats.\nIn this post I want to show you how you can setup a project to build your perl module(s) in OBS. Some parts might not be that intuitive, so I documented everything with screenshots.\nIn my next post I will show how you can setup your package to automatically build on pull requests.",
   "inLanguage" : "en",
-  "wordCount":  934 ,
+  "wordCount":  945 ,
   "datePublished" : "2024-04-11T22:46:35",
   "dateModified" : "2024-04-11T20:45:17",
   "image" : "https:\/\/perlpunk.github.io\/avatar.jpeg",
@@ -273,7 +273,7 @@ Your perl module might already be in the list!</p>
 <h2 id="prerequisites">Prerequisites</h2>
 <p>First you should create an account <a href="https://build.opensuse.org/">here</a>. This is
 not covered in this post, but should be easy enough :)</p>
-<p>Note that OBS website has two layouts. For smaller screens, there is a
+<p>Note that the OBS website has two layouts. For smaller screens, there is a
 horizontal bar at the bottom. Otherwise there will be a vertical bar on the
 left.</p>
 <p>I used the small layout in my screenshots.</p>
@@ -437,6 +437,7 @@ the first Webhook ping.</p>
 <p>Now with every commit to the <code>main</code> branch the OBS project should be rebuilt.</p>
 <p>It&rsquo;s also possible to be notified of build failures for projects. Look at the
 &ldquo;Watchlist&rdquo; and &ldquo;Notifications&rdquo; items in the top navigation.</p>
+<p>You can download the generated rpm package under &ldquo;Download package&rdquo;.</p>
 <p>I hope that was helpful.</p>
 <p>In the next post I will show how to build the module on every pull request.</p>
 
@@ -457,6 +458,10 @@ the first Webhook ping.</p>
       
         <ul class="pager blog-pager">
           
+          
+            <li class="next">
+              <a href="https://perlpunk.github.io/posts/2024-04-obs-as-a-ci-for-perl-modules/" data-toggle="tooltip" data-placement="top" title="Using OBS as a CI for Perl Modules">Next Post &rarr;</a>
+            </li>
           
         </ul>
       

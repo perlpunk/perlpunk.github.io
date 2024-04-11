@@ -6,8 +6,15 @@
     <description>Recent content in Software Engineering on Tina&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Thu, 11 Apr 2024 22:46:35 +0200</lastBuildDate>
+    <lastBuildDate>Thu, 11 Apr 2024 23:11:55 +0200</lastBuildDate>
     <atom:link href="https://perlpunk.github.io/tags/software-engineering/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Using OBS as a CI for Perl Modules</title>
+      <link>https://perlpunk.github.io/posts/2024-04-obs-as-a-ci-for-perl-modules/</link>
+      <pubDate>Thu, 11 Apr 2024 23:11:55 +0200</pubDate>
+      <guid>https://perlpunk.github.io/posts/2024-04-obs-as-a-ci-for-perl-modules/</guid>
+      <description>Introduction In my previous Building a Perl Module in OBS post I showed how you can build rpm packages in OBS from your perl module(s). Every commit on the main branch will trigger a new build.&#xA;Now I will show how to automatically build the package from a GitHub Pull Request. It&amp;rsquo;s recommended to read the previous post first.&#xA;For that I need to add an OBS Workflow. I need a GitHub Token, an OBS Token and a workflow YAML file.</description>
+    </item>
     <item>
       <title>Building a Perl Module in OBS</title>
       <link>https://perlpunk.github.io/posts/2024-04-building-a-perl-module-in-obs/</link>
