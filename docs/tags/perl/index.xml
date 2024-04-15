@@ -13,7 +13,7 @@
       <link>https://perlpunk.github.io/posts/2024-04-how-suse-cpan-modules-are-updated/</link>
       <pubDate>Sun, 14 Apr 2024 21:18:03 +0200</pubDate>
       <guid>https://perlpunk.github.io/posts/2024-04-how-suse-cpan-modules-are-updated/</guid>
-      <description>Introduction Packages for SUSE distributions are built in the Open Build Service (OBS).&#xA;In the devel:languages:perl repository we currently have over 3100 perl modules from CPAN.&#xA;Not all of them land in the official SUSE distribution repositories though. openSUSE:Factory is the repository which tracks those packages. In there we currently have almost 1400 CPAN modules.&#xA;There are too many CPAN uploads to all do them manually in OBS.&#xA;So we have an automated process for updating.</description>
+      <description>Introduction Packages for SUSE distributions are built in the Open Build Service (OBS).&#xA;In my previous posts I showed how a perl module is built in OBS and how you can use it as a CI.&#xA;Now I want to show how we at SUSE maintain modules that are part of an official openSUSE release.&#xA;In the devel:languages:perl repository we currently have over 3100 perl modules from CPAN.&#xA;Not all of them land in the official SUSE distribution repositories though.</description>
     </item>
     <item>
       <title>Using OBS as a CI for Perl Modules</title>

@@ -13,10 +13,10 @@
       <title>How Perl CPAN Modules Are Updated in SUSE - </title>
 
   <meta name="description" content="Introduction Packages for SUSE distributions are built in the Open Build Service (OBS).
+In my previous posts I showed how a perl module is built in OBS and how you can use it as a CI.
+Now I want to show how we at SUSE maintain modules that are part of an official openSUSE release.
 In the devel:languages:perl repository we currently have over 3100 perl modules from CPAN.
-Not all of them land in the official SUSE distribution repositories though. openSUSE:Factory is the repository which tracks those packages. In there we currently have almost 1400 CPAN modules.
-There are too many CPAN uploads to all do them manually in OBS.
-So we have an automated process for updating."><script type="application/ld+json">
+Not all of them land in the official SUSE distribution repositories though."><script type="application/ld+json">
 {
     "@context": "http://schema.org",
     "@type": "WebSite",
@@ -64,9 +64,9 @@ So we have an automated process for updating."><script type="application/ld+json
     "name" : ""
   },
   "headline": "How Perl CPAN Modules Are Updated in SUSE",
-  "description" : "Introduction Packages for SUSE distributions are built in the Open Build Service (OBS).\nIn the devel:languages:perl repository we currently have over 3100 perl modules from CPAN.\nNot all of them land in the official SUSE distribution repositories though. openSUSE:Factory is the repository which tracks those packages. In there we currently have almost 1400 CPAN modules.\nThere are too many CPAN uploads to all do them manually in OBS.\nSo we have an automated process for updating.",
+  "description" : "Introduction Packages for SUSE distributions are built in the Open Build Service (OBS).\nIn my previous posts I showed how a perl module is built in OBS and how you can use it as a CI.\nNow I want to show how we at SUSE maintain modules that are part of an official openSUSE release.\nIn the devel:languages:perl repository we currently have over 3100 perl modules from CPAN.\nNot all of them land in the official SUSE distribution repositories though.",
   "inLanguage" : "en",
-  "wordCount":  831 ,
+  "wordCount":  883 ,
   "datePublished" : "2024-04-14T21:18:03",
   "dateModified" : "2024-04-14T21:18:03",
   "image" : "https:\/\/perlpunk.github.io\/avatar.jpeg",
@@ -87,10 +87,10 @@ So we have an automated process for updating."><script type="application/ld+json
 
 <meta property="og:title" content="How Perl CPAN Modules Are Updated in SUSE" />
 <meta property="og:description" content="Introduction Packages for SUSE distributions are built in the Open Build Service (OBS).
+In my previous posts I showed how a perl module is built in OBS and how you can use it as a CI.
+Now I want to show how we at SUSE maintain modules that are part of an official openSUSE release.
 In the devel:languages:perl repository we currently have over 3100 perl modules from CPAN.
-Not all of them land in the official SUSE distribution repositories though. openSUSE:Factory is the repository which tracks those packages. In there we currently have almost 1400 CPAN modules.
-There are too many CPAN uploads to all do them manually in OBS.
-So we have an automated process for updating.">
+Not all of them land in the official SUSE distribution repositories though.">
 <meta property="og:image" content="https://perlpunk.github.io/avatar.jpeg" />
 <meta property="og:url" content="https://perlpunk.github.io/posts/2024-04-how-suse-cpan-modules-are-updated/" />
 <meta property="og:type" content="website" />
@@ -98,8 +98,8 @@ So we have an automated process for updating.">
 
   <meta name="twitter:title" content="How Perl CPAN Modules Are Updated in SUSE" />
   <meta name="twitter:description" content="Introduction Packages for SUSE distributions are built in the Open Build Service (OBS).
-In the devel:languages:perl repository we currently have over 3100 perl modules from CPAN.
-Not all of them land …">
+In my previous posts I showed how a perl module is built in OBS and how you can use it as a CI.
+Now I want to …">
   <meta name="twitter:image" content="https://perlpunk.github.io/avatar.jpeg" />
   <meta name="twitter:card" content="summary_large_image" />
   <link href='https://perlpunk.github.io/avatar.jpeg' rel='icon' type='image/x-icon'/>
@@ -266,6 +266,8 @@ Not all of them land …">
         <h2 id="introduction">Introduction</h2>
 <p>Packages for SUSE distributions are built in the <a href="https://build.opensuse.org/">Open Build
 Service (OBS)</a>.</p>
+<p>In my previous posts I showed how <a href="../2024-04-building-a-perl-module-in-obs/">a perl module is built in OBS</a> and how <a href="../2024-04-obs-as-a-ci-for-perl-modules/">you can use it as a CI</a>.</p>
+<p>Now I want to show how we at SUSE maintain modules that are part of an official openSUSE release.</p>
 <p>In the <a href="https://build.opensuse.org/project/show/devel:languages:perl"><code>devel:languages:perl</code></a>
 repository we currently have over 3100 perl modules from CPAN.</p>
 <p>Not all of them land in the official SUSE distribution repositories though.
@@ -295,7 +297,8 @@ Also any non-perl dependencies cannot be handled with CPAN META files currently.
 <p>For those cases we have a <a href="https://github.com/openSUSE/cpanspec/blob/master/cpanspec.yml"><code>cpanspec.yml</code></a> file which we can add to a module to configure manual overrides.
 This is also very important when we want to apply patches that haven&rsquo;t been included upstream.
 The file is very useful because any manual changes to the spec file would be
-oerwritten with the next release.</p>
+overwritten with the next release.</p>
+<p>I collected all cpanspec.yml files into <a href="https://github.com/perlpunk/cpan-meta/blob/main/cpanspec.yaml">one big file recently</a>.</p>
 <h3 id="versions">Versions</h3>
 <p>One of the bigger challenges is the versioning.</p>
 <p>At the time of this writing, most perl modules in SUSE have the literal version from CPAN in the spec.</p>
@@ -304,8 +307,8 @@ oerwritten with the next release.</p>
 <p>However, for rpm <code>3.19</code> is greater than <code>3.2</code>.
 😵‍💫</p>
 <p>When the module author is using the good practice to always use the same
-number of digits after the dot, e.g. <code>3.20</code>, then rpm would be fine wit
-hthat.
+number of digits after the dot, e.g. <code>3.20</code>, then rpm would be fine with
+that.
 But if they don&rsquo;t, in those cases we have to adjust the version manually.
 For the next release, e.g. <code>3.21</code> it&rsquo;s going to be fine again usually.</p>
 <p>We are currently in the process of converting the versions to the normalized form, which can be generated with the builtin version module:
