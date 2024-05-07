@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en" itemscope itemtype="http://schema.org/WebPage">
+  <head>
+    
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+ 
+
+
+      <title>The Annual Perl Toolchain Summit - </title>
+
+  <meta name="description" content="Introduction The Perl Toolchain Summit is an annual event where around 30-35 people are gathering to work on toolchain related tasks. The topics are the Perl Authors Upload Server, MetaCPAN, CPAN clients, Testing and Coverage modules, Smoketesting Perl, CPAN Security, Cyber Resilience Act, Module Dependencies, and many more.
+This year it took place in Lisbon, Portugal from April 25-28.
+It&rsquo;s a mix of discussions, pair programming and presentations. All attendees are usually in the same hotel where the conference is happening, so during those four days a useful discussion can start any time."><script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "WebSite",
+    "name": "Tina\u0027s Blog",
+    
+    "url": "https:\/\/perlpunk.github.io\/"
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Organization",
+  "name": "",
+  "url": "https:\/\/perlpunk.github.io\/"
+  
+  
+  
+  
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+        "@type": "ListItem",
+        "position": 1,
+        "item": {
+          "@id": "https:\/\/perlpunk.github.io\/",
+          "name": "home"
+        }
+    },{
+        "@type": "ListItem",
+        "position": 3,
+        "item": {
+          "@id": "https:\/\/perlpunk.github.io\/posts\/2024-05-the-annual-perl-toolchain-summit\/",
+          "name": "The annual perl toolchain summit"
+        }
+    }]
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Article",
+  "author": {
+    "name" : ""
+  },
+  "headline": "The Annual Perl Toolchain Summit",
+  "description" : "Introduction The Perl Toolchain Summit is an annual event where around 30-35 people are gathering to work on toolchain related tasks. The topics are the Perl Authors Upload Server, MetaCPAN, CPAN clients, Testing and Coverage modules, Smoketesting Perl, CPAN Security, Cyber Resilience Act, Module Dependencies, and many more.\nThis year it took place in Lisbon, Portugal from April 25-28.\nIt\u0026rsquo;s a mix of discussions, pair programming and presentations. All attendees are usually in the same hotel where the conference is happening, so during those four days a useful discussion can start any time.",
+  "inLanguage" : "en",
+  "wordCount":  1092 ,
+  "datePublished" : "2024-05-07T17:13:50",
+  "dateModified" : "2024-05-07T17:13:50",
+  "image" : "https:\/\/perlpunk.github.io\/avatar.jpeg",
+  "keywords" : [ "software engineering, perl, toolchain, conference, yaml" ],
+  "mainEntityOfPage" : "https:\/\/perlpunk.github.io\/posts\/2024-05-the-annual-perl-toolchain-summit\/",
+  "publisher" : {
+    "@type": "Organization",
+    "name" : "https:\/\/perlpunk.github.io\/",
+    "logo" : {
+        "@type" : "ImageObject",
+        "url" : "https:\/\/perlpunk.github.io\/avatar.jpeg",
+        "height" :  60 ,
+        "width" :  60
+    }
+  }
+}
+</script>
+
+<meta property="og:title" content="The Annual Perl Toolchain Summit" />
+<meta property="og:description" content="Introduction The Perl Toolchain Summit is an annual event where around 30-35 people are gathering to work on toolchain related tasks. The topics are the Perl Authors Upload Server, MetaCPAN, CPAN clients, Testing and Coverage modules, Smoketesting Perl, CPAN Security, Cyber Resilience Act, Module Dependencies, and many more.
+This year it took place in Lisbon, Portugal from April 25-28.
+It&rsquo;s a mix of discussions, pair programming and presentations. All attendees are usually in the same hotel where the conference is happening, so during those four days a useful discussion can start any time.">
+<meta property="og:image" content="https://perlpunk.github.io/avatar.jpeg" />
+<meta property="og:url" content="https://perlpunk.github.io/posts/2024-05-the-annual-perl-toolchain-summit/" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Tina&#39;s Blog" />
+
+  <meta name="twitter:title" content="The Annual Perl Toolchain Summit" />
+  <meta name="twitter:description" content="Introduction The Perl Toolchain Summit is an annual event where around 30-35 people are gathering to work on toolchain related tasks. The topics are the Perl Authors Upload Server, MetaCPAN, CPAN …">
+  <meta name="twitter:image" content="https://perlpunk.github.io/avatar.jpeg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link href='https://perlpunk.github.io/avatar.jpeg' rel='icon' type='image/x-icon'/>
+  <meta name="generator" content="Hugo 0.124.1">
+  <link rel="alternate" href="https://perlpunk.github.io/index.xml" type="application/rss+xml" title="Tina&#39;s Blog"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/katex.min.css" integrity="sha384-3UiQGuEI4TTMaFmGIZumfRPtfKQ3trwQE2JgosJxCnGmQpL/lJdjpcHkaaFwHlcI" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous"><link rel="stylesheet" href="https://perlpunk.github.io/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" /><link rel="stylesheet" href="https://perlpunk.github.io/css/syntax.css" /><link rel="stylesheet" href="https://perlpunk.github.io/css/codeblock.css" /><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
+
+  </head>
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://perlpunk.github.io/">Tina&#39;s Blog</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li>
+              <a title="Blog" href="https://perlpunk.github.io/">Blog</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="About" href="https://perlpunk.github.io/">About</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="Search" href="https://perlpunk.github.io/">Search</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="Tags" href="https://perlpunk.github.io/tags/">Tags</a>
+            </li>
+          
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    
+      <div class="avatar-container">
+        <div class="avatar-img-border">
+          <a title="Tina&#39;s Blog" href="https://perlpunk.github.io/">
+            <img class="avatar-img" src="https://perlpunk.github.io/avatar.jpeg" alt="Tina&#39;s Blog" />
+          </a>
+        </div>
+      </div>
+    
+
+  </div>
+</nav>
+
+
+
+
+    
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+
+  
+  
+  
+
+
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+    
+    <div class="intro-header no-img">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="posts-heading">
+              
+                <h1>The Annual Perl Toolchain Summit</h1>
+              
+              
+                <hr class="small">
+              
+              
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+  </header>
+
+
+    
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+        <h2 id="introduction">Introduction</h2>
+<p>The <a href="https://perltoolchainsummit.org/pts2024/">Perl Toolchain Summit</a> is an annual
+event where around 30-35 people are gathering to work on toolchain related
+tasks. The topics are the <a href="https://pause.perl.org/">Perl Authors Upload Server</a>,
+<a href="https://metacpan.org/">MetaCPAN</a>, CPAN clients, Testing and Coverage modules,
+Smoketesting Perl, CPAN Security, Cyber Resilience Act, Module Dependencies,
+and many more.</p>
+<p>This year it took place in Lisbon, Portugal from April 25-28.</p>
+<p>It&rsquo;s a mix of discussions, pair programming and presentations. All attendees
+are usually in the same hotel where the conference is happening, so during
+those four days a useful discussion can start any time. It&rsquo;s crucial to
+be in the same room(s) for many attendees.</p>
+<p>This time, my employer <a href="https://www.suse.com/">SUSE</a> sponsored my travel and
+accomodation to go there. Thanks!</p>
+<p>This was my sixth Toolchain Summit, including my first <a href="http://perltoolchainsummit.org/qa2015/">in
+2015</a> in Berlin which I organized
+together with Andreas König.</p>
+<p>Below I write about what I worked on at the PTS, but you can also check out the
+<a href="https://perltoolchainsummit.org/pts2024/wiki?node=Blogs">blog posts from other
+attendees</a>.</p>
+<h3 id="yaml">YAML</h3>
+<p>My topic has been mosty YAML for all the Summits. While it&rsquo;s not strictly
+really toolchain related, YAML modules in Perl are important, and many other
+modules depend on one of them.</p>
+<p>This time I looked into some issues reported by
+<a href="https://oss-fuzz.com/">OSS-Fuzz</a> for
+<a href="https://github.com/yaml/libyaml">libyaml</a>.
+<a href="https://metacpan.org/dist/YAML-LibYAML">YAML::XS</a>, a binding to libyaml, is a
+widely used module.</p>
+<p>The reported issues were security relevant regarding loading and dumping
+untrusted YAML documents. There had also been reported some issues a few weeks
+before the Summit.</p>
+<p>I already was able to find out before the summit that one of the issues was not
+an issue with libyaml itself, but with the fuzzing code. I made a
+<a href="https://github.com/google/oss-fuzz/pull/11818">pull request to oss-fuzz</a> that
+got merged pretty soon. This PR also allowed to fuzztest much more input,
+because the code had been skipping a lot of test cases before because of the
+bug I fixed.</p>
+<p>Then we got two more issues reported shortly before the summit, and I had to
+look into some libyaml C code I had never looked at before. So I learned a bit
+of C here :)</p>
+<p>It turns out, those two issues where also resulting from mistakes in the fuzzing
+code, so I created two more pull requests
+<a href="https://github.com/google/oss-fuzz/pull/11840">oss-fuzz#11840</a> and
+<a href="https://github.com/google/oss-fuzz/pull/11848">oss-fuzz#11848</a>. Those were
+also merged quickly.</p>
+<p>So the fuzztesting improved. And just a few days after the Summit we got
+another report for libyaml, and this time a valid one, showing a parsing bug in
+libyaml, and a potential stack overflow in the emitter.</p>
+<p>I managed to fix the parsing bug
+<a href="https://github.com/yaml/libyaml/pull/295">yesterday</a>.  The stack overflow in
+the emitter is still unclear, but with the fixed parser it won&rsquo;t happen
+anymore. The default nesting limit will prevent this specific case now.</p>
+<p>I will do a libyaml release hopefully in the next weeks, and also update
+YAML::XS.</p>
+<h3 id="perl-module-versions">Perl Module Versions</h3>
+<p>As part of the Cyber Resilience Act / SBOM discussion, I gave a short talk on
+perl module versions.</p>
+<p>We want to introduce a language independent way of specifying module names,
+for example with <a href="https://github.com/package-url/purl-spec">Package URLs</a>.</p>
+<p>Related to that is a way to specify what version(s) of a module an
+application or another module depends on. And comparing version numbers
+against each other works a bit different in perl than in most other languages.</p>
+<p>So I gave a <a href="https://www.youtube.com/watch?v=BrB9_VZxIVw">short talk</a> about it,
+and I also recently wrote <a href="../2024-04-how-suse-cpan-modules-are-updated/">a blog
+post</a> related on that topic.</p>
+<p>Versions in perl are simply decimal numbers, so <code>0.9</code> would actually be greater
+than <code>0.89</code>. But you can also use versions with more than one dot, e.g.
+<code>3.14.15</code>, which are not decimal.</p>
+<p>The normalized versions of <code>0.89</code> and <code>0.9</code> would be <code>0.890.0</code> and <code>0.900.0</code>.</p>
+<p>And that format is what most other languages and package managers use and
+understand. So it might be a good idea to use those normalized versions when
+using a language independent package url, so it won&rsquo;t be necessary to use
+different algorithms for checking version requirements of an application.</p>
+<h3 id="perl-module-metadata">Perl Module Metadata</h3>
+<p>As I&rsquo;m responsible for updating new CPAN releases in
+<a href="https://build.opensuse.org/project/show/devel:languages:perl">devel:languages:perl</a>
+for openSUSE, I maintain <a href="https://github.com/openSUSE/cpanspec">cpanspec</a>,
+a script to extract all kinds of metadata from a module tarball.</p>
+<p>It runs <code>Makefile.PL</code> if necessary to get dynamic metadata from the
+<code>MYMETA.(json|yml)</code> files, otherwise from <code>META.(json|yml)</code>.</p>
+<p>Ideally all information should come from the META files, however in reality
+that&rsquo;s often not the case, so it also looks into other files and the pod
+documentation to find out about the license, description etc.</p>
+<p>Additionally to that, sometimes there is simply missing information, for example
+a missing dependency. For that we have a <code>cpanspec.yml</code> file for each module,
+where we specify such &ldquo;errata&rdquo;. Also it&rsquo;s necessary for specifying extra
+dependencies, for example on C libraries, that cannot be specified in a
+Perl module currently.</p>
+<p>cpanspec merges the data from reading the tarball information plus the
+<code>cpanspec.yml</code> file and automatically generates the <code>.spec</code> file for rpm.</p>
+<p>Now at the PTS we discussed with a handful of people that it would be nice
+if not every vendor would have to maintain their own script and errata,
+but that we rather share some of this.</p>
+<p>As a first step I collected all <code>cpanspec.yml</code> and <code>.spec</code> data we have
+into a <a href="https://github.com/perlpunk/cpan-meta">cpan-meta repository</a>.</p>
+<p>As a next step, I would like to factor out some of the cpanspec
+functions into a module that can be released to CPAN.</p>
+<h4 id="running-cpanspec">Running cpanspec</h4>
+<p>Currently, the script to update CPAN moduled is run daily on one of our
+servers at SUSE.</p>
+<p>It also updates <strong>all</strong> CPAN modules in the specific <a href="https://build.opensuse.org/project/show/devel:languages:perl:CPAN-A">CPAN-A</a> etc. subprojects. This part still needs to
+run on one of our servers for now, because of technical reasons (it needs to
+keep a big status file of all modules).</p>
+<p>But I now started to move the update of
+<a href="https://build.opensuse.org/project/show/devel:languages:perl">devel:languages:perl</a>
+into a GitHub action. This makes it more transparent, and every CPAN author
+would be able to look into the log and see why there could be a problem with a
+specific module.</p>
+<p>The work is in <a href="https://github.com/perlpunk/cpanspec/tree/update-perl-gh">this
+branch</a> so far.  I
+also started a container image
+<code>registry.opensuse.org/home/tinita/cpanspec/container/containers/dlp-autoupdate:latest</code>
+that has all dependencies for cpanspec and the automated update installed. The
+Dockerfile comes from the <a href="https://build.opensuse.org/package/show/home:tinita:cpanspec:container/autoupdate">Open Build
+Service</a>
+and is also maintained in my branch currently.</p>
+<h2 id="sponsors">Sponsors</h2>
+<p>Thanks to the tireless organizing team for making this happen again!</p>
+<p>And thanks to the following organizations, companies and people to support
+this financially:</p>
+<p>Monetary sponsors:
+<a href="http://www.booking.com/">Booking.com</a>,
+<a href="https://www.perlfoundation.org/">The Perl and Raku Foundation</a>,
+<a href="https://deriv.com/?utm_source=perltoolchainsummitdotorg&utm_medium=pr&utm_campaign=sponsorship&utm_content=homepage_logo">Deriv</a>,
+<a href="https://cpanel.net/">cPanel, Inc</a>
+<a href="https://japan.perlassociation.org/">Japan Perl Association</a>,
+<a href="https://www.perl-services.de/">Perl-Services</a>,
+<a href="https://www.simplelists.com/">Simplelists Ltd</a>,
+<a href="https://www.ctrlo.com/">Ctrl O Ltd</a>,
+<a href="https://www.findus-internet-opac.de/">Findus Internet-OPAC</a>,
+Harald Joerg,
+Steven Schubiger.</p>
+<p>In kind sponsors:
+<a href="https://www.fastmail.com/">Fastmail</a>,
+<a href="https://www.grantstreet.com/">Grant Street Group</a>,
+<a href="https://deft.com/">Deft</a>,
+<a href="https://www.procura.nl/">Procura</a>,
+<a href="https://healex.systems/">Healex GmbH</a>,
+<a href="https://www.suse.com/">SUSE</a>,
+<a href="https://www.zoopla.co.uk/">Zoopla</a>.</p>
+
+
+        
+          <div class="blog-tags">
+            
+              <a href="https://perlpunk.github.io//tags/software-engineering/">software engineering</a>&nbsp;
+            
+              <a href="https://perlpunk.github.io//tags/perl/">perl</a>&nbsp;
+            
+              <a href="https://perlpunk.github.io//tags/toolchain/">toolchain</a>&nbsp;
+            
+              <a href="https://perlpunk.github.io//tags/conference/">conference</a>&nbsp;
+            
+              <a href="https://perlpunk.github.io//tags/yaml/">yaml</a>&nbsp;
+            
+          </div>
+        
+
+        
+
+        
+      </article>
+
+      
+        <ul class="pager blog-pager">
+          
+            <li class="previous">
+              <a href="https://perlpunk.github.io/posts/2024-04-how-suse-cpan-modules-are-updated/" data-toggle="tooltip" data-placement="top" title="How Perl CPAN Modules Are Updated in SUSE">&larr; Previous Post</a>
+            </li>
+          
+          
+        </ul>
+      
+
+
+      
+        
+        
+      
+
+    </div>
+  </div>
+</div>
+
+      
+<footer>
+  <div class="container">
+    
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+          
+          <li>
+            <a href="" title="RSS">
+              <span class="fa-stack fa-lg">
+                <i class="fas fa-circle fa-stack-2x"></i>
+                <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          
+
+          &nbsp;&bull;&nbsp;&copy;
+          
+            2024
+          
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="https://perlpunk.github.io/">Tina&#39;s Blog</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="https://gohugo.io">Hugo v0.124.1</a> powered &nbsp;&bull;&nbsp; Theme <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a> adapted from <a href="https://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer><script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/katex.min.js" integrity="sha384-G0zcxDFp5LWZtDuRMnBkk3EphCK1lhEf4UEyEM693ka574TZGwo4IWwS6QLzM/2t" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
+<script src="https://code.jquery.com/jquery-3.7.0.slim.min.js" integrity="sha384-w5y/xIeYixWvfM+A1cEbmHPURnvyqmVg5eVENruEdDjcyRLUSNej7512JQGspFUr" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+
+<script src="https://perlpunk.github.io/js/main.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js" integrity="sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js" integrity="sha384-m67o7SkQ1ALzKZIFh4CiTA8tmadaujiTa9Vu+nqPSwDOqHrDmxLezTdFln8077+q" crossorigin="anonymous"></script><script src="https://perlpunk.github.io/js/load-photoswipe.js"></script>
+
+
+
+
+
+
+
+
+
+    
+  </body>
+</html>
+

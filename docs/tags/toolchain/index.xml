@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Toolchain on Tina&#39;s Blog</title>
+    <link>https://perlpunk.github.io/tags/toolchain/</link>
+    <description>Recent content in Toolchain on Tina&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Tue, 07 May 2024 17:13:50 +0200</lastBuildDate>
+    <atom:link href="https://perlpunk.github.io/tags/toolchain/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>The Annual Perl Toolchain Summit</title>
+      <link>https://perlpunk.github.io/posts/2024-05-the-annual-perl-toolchain-summit/</link>
+      <pubDate>Tue, 07 May 2024 17:13:50 +0200</pubDate>
+      <guid>https://perlpunk.github.io/posts/2024-05-the-annual-perl-toolchain-summit/</guid>
+      <description>Introduction The Perl Toolchain Summit is an annual event where around 30-35 people are gathering to work on toolchain related tasks. The topics are the Perl Authors Upload Server, MetaCPAN, CPAN clients, Testing and Coverage modules, Smoketesting Perl, CPAN Security, Cyber Resilience Act, Module Dependencies, and many more.&#xA;This year it took place in Lisbon, Portugal from April 25-28.&#xA;It&amp;rsquo;s a mix of discussions, pair programming and presentations. All attendees are usually in the same hotel where the conference is happening, so during those four days a useful discussion can start any time.</description>
+    </item>
+  </channel>
+</rss>

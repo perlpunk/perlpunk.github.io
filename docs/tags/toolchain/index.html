@@ -10,7 +10,7 @@
  
 
 
-      <title>Perl - </title>
+      <title>Toolchain - </title>
 <script type="application/ld+json">
 {
     "@context": "http://schema.org",
@@ -32,13 +32,13 @@
 }
 </script>
 
-<meta property="og:title" content="Perl" />
+<meta property="og:title" content="Toolchain" />
 <meta property="og:image" content="https://perlpunk.github.io/avatar.jpeg" />
-<meta property="og:url" content="https://perlpunk.github.io/tags/perl/" />
+<meta property="og:url" content="https://perlpunk.github.io/tags/toolchain/" />
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="Tina&#39;s Blog" />
 
-  <meta name="twitter:title" content="Perl" />
+  <meta name="twitter:title" content="Toolchain" />
   <meta name="twitter:image" content="https://perlpunk.github.io/avatar.jpeg" />
   <meta name="twitter:card" content="summary_large_image" />
   <link href='https://perlpunk.github.io/avatar.jpeg' rel='icon' type='image/x-icon'/>
@@ -181,7 +181,7 @@
           <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
             <div class="tags-heading">
               
-                <h1>Perl</h1>
+                <h1>Toolchain</h1>
               
               
                 <hr class="small">
@@ -257,155 +257,6 @@ It&rsquo;s a mix of discussions, pair programming and presentations. All attende
 
 </article>
           
-            <article class="post-preview">
-    <a href="https://perlpunk.github.io/posts/2024-04-how-suse-cpan-modules-are-updated/">
-        <h2 class="post-title">How Perl CPAN Modules Are Updated in SUSE</h2>
-        
-        
-        
-    </a>
-
-    <p class="post-meta">
-        <span class="post-meta">
-  
-  
-  <i class="fas fa-calendar"></i>&nbsp;Posted on April 14, 2024
-  
-  
-  
-  
-    
-      &nbsp;|&nbsp;<i class="fas fa-user"></i>&nbsp;
-    
-  
-  
-</span>
-
-
-    </p>
-    <div class="post-entry">
-        
-        Introduction Packages for SUSE distributions are built in the Open Build Service (OBS).
-In my previous posts I showed how a perl module is built in OBS and how you can use it as a CI.
-Now I want to show how we at SUSE maintain modules that are part of an official openSUSE release.
-In the devel:languages:perl repository we currently have over 3100 perl modules from CPAN.
-Not all of them land in the official SUSE distribution repositories though.
-        <a href="https://perlpunk.github.io/posts/2024-04-how-suse-cpan-modules-are-updated/" class="post-read-more">[Read More]</a>
-        
-    </div>
-
-    
-    <div class="blog-tags">
-        
-        <a href="https://perlpunk.github.io//tags/software-engineering/">software engineering</a>&nbsp;
-        
-        <a href="https://perlpunk.github.io//tags/open-build-service/">open build service</a>&nbsp;
-        
-        <a href="https://perlpunk.github.io//tags/perl/">perl</a>&nbsp;
-        
-    </div>
-    
-
-</article>
-          
-            <article class="post-preview">
-    <a href="https://perlpunk.github.io/posts/2024-04-obs-as-a-ci-for-perl-modules/">
-        <h2 class="post-title">Using OBS as a CI for Perl Modules</h2>
-        
-        
-        
-    </a>
-
-    <p class="post-meta">
-        <span class="post-meta">
-  
-  
-  <i class="fas fa-calendar"></i>&nbsp;Posted on April 11, 2024
-  
-  
-  
-  
-    
-      &nbsp;|&nbsp;<i class="fas fa-user"></i>&nbsp;
-    
-  
-  
-</span>
-
-
-    </p>
-    <div class="post-entry">
-        
-        Introduction In my previous Building a Perl Module in OBS post I showed how you can build rpm packages in OBS from your perl module(s). Every commit on the main branch will trigger a new build.
-Now I will show how to automatically build the package from a GitHub Pull Request. It&rsquo;s recommended to read the previous post first.
-For that I need to add an OBS Workflow. I need a GitHub Token, an OBS Token and a workflow YAML file.
-        <a href="https://perlpunk.github.io/posts/2024-04-obs-as-a-ci-for-perl-modules/" class="post-read-more">[Read More]</a>
-        
-    </div>
-
-    
-    <div class="blog-tags">
-        
-        <a href="https://perlpunk.github.io//tags/software-engineering/">software engineering</a>&nbsp;
-        
-        <a href="https://perlpunk.github.io//tags/open-build-service/">open build service</a>&nbsp;
-        
-        <a href="https://perlpunk.github.io//tags/perl/">perl</a>&nbsp;
-        
-    </div>
-    
-
-</article>
-          
-            <article class="post-preview">
-    <a href="https://perlpunk.github.io/posts/2024-04-building-a-perl-module-in-obs/">
-        <h2 class="post-title">Building a Perl Module in OBS</h2>
-        
-        
-        
-    </a>
-
-    <p class="post-meta">
-        <span class="post-meta">
-  
-  
-  <i class="fas fa-calendar"></i>&nbsp;Posted on April 11, 2024
-  
-  
-  
-  
-    
-      &nbsp;|&nbsp;<i class="fas fa-user"></i>&nbsp;
-    
-  
-  
-</span>
-
-
-    </p>
-    <div class="post-entry">
-        
-        Introduction The Open Build Service is used to build all packages for the SUSE operating system family. It can also be used to build other package formats.
-In this post I want to show you how you can setup a project to build your perl module(s) in OBS. Some parts might not be that intuitive, so I documented everything with screenshots.
-In my next post I will show how you can setup your package to automatically build on pull requests.
-        <a href="https://perlpunk.github.io/posts/2024-04-building-a-perl-module-in-obs/" class="post-read-more">[Read More]</a>
-        
-    </div>
-
-    
-    <div class="blog-tags">
-        
-        <a href="https://perlpunk.github.io//tags/software-engineering/">software engineering</a>&nbsp;
-        
-        <a href="https://perlpunk.github.io//tags/open-build-service/">open build service</a>&nbsp;
-        
-        <a href="https://perlpunk.github.io//tags/perl/">perl</a>&nbsp;
-        
-    </div>
-    
-
-</article>
-          
         </div>
         
       </div>
@@ -422,7 +273,7 @@ In my next post I will show how you can setup your package to automatically buil
           
           
           <li>
-            <a href="https://perlpunk.github.io/tags/perl/index.xml" title="RSS">
+            <a href="https://perlpunk.github.io/tags/toolchain/index.xml" title="RSS">
               <span class="fa-stack fa-lg">
                 <i class="fas fa-circle fa-stack-2x"></i>
                 <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
