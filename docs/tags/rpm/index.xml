@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Rpm on Tina&#39;s Blog</title>
+    <link>https://perlpunk.github.io/tags/rpm/</link>
+    <description>Recent content in Rpm on Tina&#39;s Blog</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <lastBuildDate>Thu, 20 Mar 2025 21:57:40 +0100</lastBuildDate>
+    <atom:link href="https://perlpunk.github.io/tags/rpm/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Generating rpm spec files for Perl Modules</title>
+      <link>https://perlpunk.github.io/posts/2025-03-generating-spec-files-for-perl-modules/</link>
+      <pubDate>Thu, 20 Mar 2025 21:57:40 +0100</pubDate>
+      <guid>https://perlpunk.github.io/posts/2025-03-generating-spec-files-for-perl-modules/</guid>
+      <description>Introduction To build a Perl module on openSUSE or other distributions, you need a file with build instructions. For rpm that&amp;rsquo;s usually a file called package-name.spec.&#xA;See also General packaging guidelines and the Perl packaging guidelines.&#xA;In Open Build Service devel:languages:perl we currently have over 3100 perl packages. That would not have been possible without some automation.&#xA;In this post I will describe how cpanspec can create spec files automatically, and how it can even update spec files for a new release without overriding manual changes from before.</description>
+    </item>
+  </channel>
+</rss>

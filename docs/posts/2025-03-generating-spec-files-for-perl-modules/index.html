@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en" itemscope itemtype="http://schema.org/WebPage">
+  <head>
+    
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+ 
+
+
+      <title>Generating rpm spec files for Perl Modules - </title>
+
+  <meta name="description" content="Introduction To build a Perl module on openSUSE or other distributions, you need a file with build instructions. For rpm that&rsquo;s usually a file called package-name.spec.
+See also General packaging guidelines and the Perl packaging guidelines.
+In Open Build Service devel:languages:perl we currently have over 3100 perl packages. That would not have been possible without some automation.
+In this post I will describe how cpanspec can create spec files automatically, and how it can even update spec files for a new release without overriding manual changes from before."><script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "WebSite",
+    "name": "Tina\u0027s Blog",
+    
+    "url": "https:\/\/perlpunk.github.io\/"
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Organization",
+  "name": "",
+  "url": "https:\/\/perlpunk.github.io\/"
+  
+  
+  
+  
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+        "@type": "ListItem",
+        "position": 1,
+        "item": {
+          "@id": "https:\/\/perlpunk.github.io\/",
+          "name": "home"
+        }
+    },{
+        "@type": "ListItem",
+        "position": 3,
+        "item": {
+          "@id": "https:\/\/perlpunk.github.io\/posts\/2025-03-generating-spec-files-for-perl-modules\/",
+          "name": "Generating rpm spec files for perl modules"
+        }
+    }]
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Article",
+  "author": {
+    "name" : ""
+  },
+  "headline": "Generating rpm spec files for Perl Modules",
+  "description" : "Introduction To build a Perl module on openSUSE or other distributions, you need a file with build instructions. For rpm that\u0026rsquo;s usually a file called package-name.spec.\nSee also General packaging guidelines and the Perl packaging guidelines.\nIn Open Build Service devel:languages:perl we currently have over 3100 perl packages. That would not have been possible without some automation.\nIn this post I will describe how cpanspec can create spec files automatically, and how it can even update spec files for a new release without overriding manual changes from before.",
+  "inLanguage" : "en",
+  "wordCount":  1334 ,
+  "datePublished" : "2025-03-20T21:57:40",
+  "dateModified" : "2025-03-20T21:57:40",
+  "image" : "https:\/\/perlpunk.github.io\/avatar.jpeg",
+  "keywords" : [ "software engineering, perl, rpm, yaml" ],
+  "mainEntityOfPage" : "https:\/\/perlpunk.github.io\/posts\/2025-03-generating-spec-files-for-perl-modules\/",
+  "publisher" : {
+    "@type": "Organization",
+    "name" : "https:\/\/perlpunk.github.io\/",
+    "logo" : {
+        "@type" : "ImageObject",
+        "url" : "https:\/\/perlpunk.github.io\/avatar.jpeg",
+        "height" :  60 ,
+        "width" :  60
+    }
+  }
+}
+</script>
+
+<meta property="og:title" content="Generating rpm spec files for Perl Modules" />
+<meta property="og:description" content="Introduction To build a Perl module on openSUSE or other distributions, you need a file with build instructions. For rpm that&rsquo;s usually a file called package-name.spec.
+See also General packaging guidelines and the Perl packaging guidelines.
+In Open Build Service devel:languages:perl we currently have over 3100 perl packages. That would not have been possible without some automation.
+In this post I will describe how cpanspec can create spec files automatically, and how it can even update spec files for a new release without overriding manual changes from before.">
+<meta property="og:image" content="https://perlpunk.github.io/avatar.jpeg" />
+<meta property="og:url" content="https://perlpunk.github.io/posts/2025-03-generating-spec-files-for-perl-modules/" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Tina&#39;s Blog" />
+
+  <meta name="twitter:title" content="Generating rpm spec files for Perl Modules" />
+  <meta name="twitter:description" content="Introduction To build a Perl module on openSUSE or other distributions, you need a file with build instructions. For rpm that&rsquo;s usually a file called package-name.spec.
+See also General …">
+  <meta name="twitter:image" content="https://perlpunk.github.io/avatar.jpeg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link href='https://perlpunk.github.io/avatar.jpeg' rel='icon' type='image/x-icon'/>
+  <meta name="generator" content="Hugo 0.131.0">
+  <link rel="alternate" href="https://perlpunk.github.io/index.xml" type="application/rss+xml" title="Tina&#39;s Blog"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/katex.min.css" integrity="sha384-3UiQGuEI4TTMaFmGIZumfRPtfKQ3trwQE2JgosJxCnGmQpL/lJdjpcHkaaFwHlcI" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous"><link rel="stylesheet" href="https://perlpunk.github.io/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" /><link rel="stylesheet" href="https://perlpunk.github.io/css/syntax.css" /><link rel="stylesheet" href="https://perlpunk.github.io/css/codeblock.css" /><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
+
+  
+
+
+  </head>
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://perlpunk.github.io/">Tina&#39;s Blog</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li>
+              <a title="Blog" href="https://perlpunk.github.io/">Blog</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="About" href="https://perlpunk.github.io/">About</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="Search" href="https://perlpunk.github.io/">Search</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="Tags" href="https://perlpunk.github.io/tags/">Tags</a>
+            </li>
+          
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    
+      <div class="avatar-container">
+        <div class="avatar-img-border">
+          <a title="Tina&#39;s Blog" href="https://perlpunk.github.io/">
+            <img class="avatar-img" src="https://perlpunk.github.io/avatar.jpeg" alt="Tina&#39;s Blog" />
+          </a>
+        </div>
+      </div>
+    
+
+  </div>
+</nav>
+
+
+
+
+    
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+
+  
+  
+  
+
+
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+    
+    <div class="intro-header no-img">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="posts-heading">
+              
+                <h1>Generating rpm spec files for Perl Modules</h1>
+              
+              
+                <hr class="small">
+              
+              
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+  </header>
+
+
+    
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+        <h2 id="introduction">Introduction</h2>
+<p>To build a Perl module on openSUSE or other distributions, you need a file
+with build instructions. For rpm that&rsquo;s usually a file called
+<code>package-name.spec</code>.</p>
+<p>See also <a href="https://en.opensuse.org/openSUSE:Packaging_guidelines">General packaging
+guidelines</a> and <a href="https://en.opensuse.org/openSUSE:Packaging_Perl">the
+Perl packaging guidelines</a>.</p>
+<p>In <a href="https://build.opensuse.org/project/show/devel:languages:perl">Open Build Service devel:languages:perl</a> we currently have over 3100 perl packages.
+That would not have been possible without some automation.</p>
+<p>In this post I will describe how
+<a href="https://github.com/openSUSE/cpanspec">cpanspec</a> can create spec files
+automatically, and how it can even update spec files for a new release without
+overriding manual changes from before.</p>
+<p>I will also mention some differences to other languages and specifically
+<a href="https://github.com/openSUSE/py2pack">py2pack</a>.</p>
+<p>Another similar script is <a href="https://github.com/fedora-ruby/gem2rpm">gem2rpm</a> for
+ruby.</p>
+<h2 id="anatomy-of-a-perl-module-">Anatomy of a Perl Module 🦴</h2>
+<p>A perl module on <a href="https://www.cpan.org/">CPAN</a> is actually called a
+distribution. It can contain more than one module, in this case referring to
+perl package names and files.</p>
+<p>I will describe the common structure here, but there can be exceptions to
+basically everything. As an example I will show
+<a href="https://metacpan.org/dist/YAML-PP">YAML::PP on CPAN</a> / <a href="https://build.opensuse.org/package/show/devel:languages:perl/perl-YAML-PP">perl-YAML-PP in
+OBS</a>.</p>
+<p>The CPAN server does not enforce any rules for the uploaded tarballs. But
+the build tools which are creating those distributions ensure some minimum
+common structure for the large majority of perl distributions out there.</p>
+<p>That is not the case for some other languages, which makes automating packaging
+harder for them.</p>
+<h3 id="source-">Source 📝</h3>
+<p>The source is uploaded as a tarball (<code>tgz</code>, <code>tar.gz</code>, but can also be <code>bz2</code> or
+<code>zip</code>).</p>
+<p>The tarball for <code>YAML::PP</code> is called <code>YAML-PP-v0.39.0.tar.gz</code>.</p>
+<p>Every distribution consists of one or more modules, and there is usually
+one main module the distribution gets its name and version from.</p>
+<p>The tarball standard name is <code>Main-Module-version.tar.gz</code>, and that&rsquo;s the case
+for over 98% of the distributions, I&rsquo;d say.</p>
+<p>In python, the tarballs sometimes use underscores, sometimes hyphens, which
+already requires manual adjustments.</p>
+<h3 id="files-">Files 📁</h3>
+<p>The most common layout is something like this:</p>
+<pre><code>lib/Main/Module.pm
+lib/Main/Module/Other.pm
+t/some-test.t
+META.yml
+META.json
+Makefile.PL
+Changes
+LICENSE
+MANIFEST
+</code></pre>
+<h3 id="documentation-">Documentation 📖</h3>
+<p>Perl modules are documented with <a href="https://en.wikipedia.org/wiki/Plain_Old_Documentation">Pod - Plain Old
+Documentation</a>.</p>
+<p>The most common and recommended layout of the documentation for modules,
+especially for the main module, is:</p>
+<ul>
+<li><code>NAME</code>: Main::Module - Abstract</li>
+<li><code>SYNOPSIS</code>: Short code examples</li>
+<li><code>DESCRIPTION</code>: Short description</li>
+<li>Other sections going into more details</li>
+<li><code>LICENSE</code></li>
+</ul>
+<p>There seems to be no such standard for python modules, for example, so
+<code>py2pack</code> just takes the whole README file, which always has to be shortened
+for the spec file manually.</p>
+<h3 id="meta-data">Meta Data</h3>
+<p>Most modules except ancient ones have a <code>META.yml</code> and/or <code>META.json</code> file with
+useful meta data, like the license, abstract, distribution name, author,
+dependencies, provided package names, homepage, bugtracker.</p>
+<h3 id="license-">License ⚖️</h3>
+<p>The License can be in several places. There&rsquo;s the LICENSE file, there is the
+LICENSE section in the Pod, and it should also be in the META files.</p>
+<p>If it&rsquo;s in the META files, it&rsquo;s usually a short identifier we can use (more or
+less) directly.
+Otherwise cpanspec uses heuristics to read the License text and generate a
+short identifier from it automatically.</p>
+<p>See also <a href="https://spdx.org/licenses/">SPDX Licence List</a>.</p>
+<p>For example <code>py2pack</code> can not do this at this time, so it needs to be adjusted
+manually.</p>
+<h2 id="running-cpanspec-on-a-new-module">Running cpanspec on a new module</h2>
+<p>If you don&rsquo;t use <code>cpan</code> or <code>cpanm</code> on your machine, you have to download the
+package index first:</p>
+<pre><code>% curl -O http://www.cpan.org/modules/02packages.details.txt.gz
+</code></pre>
+<p>Then download the tarball. It is also possible to specify the module name,
+but for demonstration purposes we use the tarball directly.</p>
+<pre><code>% curl -O https://cpan.metacpan.org/authors/id/T/TI/TINITA/YAML-PP-v0.38.0.tar.gz
+</code></pre>
+<p>Then generate the spec file:</p>
+<pre><code>% cpanspec --pkgdetails 02packages.details.txt.gz YAML-PP-v0.38.0.tar.gz
+...
+cat perl-YAML-PP.spec
+#
+# spec file for package perl-YAML-PP
+#
+# Copyright (c) 2025 SUSE LLC
+#
+...
+</code></pre>
+<p>For the first generation, it will also create a <code>perl-YAML-PP.changes</code> for you.
+You can skip that with <code>--skip-changes</code>.</p>
+<p>To get more information about the metadata that <code>cpanspec</code> found, use the <code>-v</code> switch.</p>
+<h3 id="the-generated-spec-file">The generated spec file</h3>
+<p>Let&rsquo;s go through the file step by step:</p>
+<pre><code>%define cpan_name YAML-PP
+Name:           perl-YAML-PP
+Version:        0.38.0
+Release:        0
+</code></pre>
+<p>The license in the META file says <code>perl_5</code>, so <code>cpanspec</code> uses this SPDX
+identifier automatically:</p>
+<pre><code>License:        Artistic-1.0 OR GPL-1.0-or-later
+</code></pre>
+<p>Also from META:</p>
+<pre><code>Summary:        YAML 1.2 Processor
+</code></pre>
+<p>Generic url and source for all modules:</p>
+<pre><code>URL:            https://metacpan.org/release/%{cpan_name}
+Source0:        https://cpan.metacpan.org/authors/id/T/TI/TINITA/%{cpan_name}-%{version}.tar.gz
+</code></pre>
+<p><code>cpanspec</code> uses some heuristics to decide if it&rsquo;s a noarch build (no .c files
+etc.):</p>
+<pre><code>BuildArch:      noarch
+</code></pre>
+<p>Common requirements:</p>
+<pre><code>BuildRequires:  perl
+BuildRequires:  perl-macros
+</code></pre>
+<p>Requirements from module meta data:</p>
+<pre><code>BuildRequires:  perl(Module::Load)
+BuildRequires:  perl(Test::More) &gt;= 0.98
+BuildRequires:  perl(Test::Warn)
+Requires:       perl(Module::Load)
+</code></pre>
+<p>Common macro:</p>
+<pre><code>%{perl_requires}
+</code></pre>
+<p>From module Pod:</p>
+<pre><code>%description
+YAML::PP is a modular YAML processor.
+
+It aims to support 'YAML 1.2' and 'YAML 1.1'. See https://yaml.org/. Some
+(rare) syntax elements are not yet supported and documented below.
+
+...
+</code></pre>
+<p>Common preparation:</p>
+<pre><code>%prep
+%autosetup  -n %{cpan_name}-%{version} -p1
+</code></pre>
+<p>The build section can vary depending on the used build script, detected
+automatically by <code>cpanspec</code>:</p>
+<pre><code>%build
+perl Makefile.PL INSTALLDIRS=vendor
+%make_build
+
+%check
+make test
+</code></pre>
+<p>Common:</p>
+<pre><code>%install
+%perl_make_install
+%perl_process_packlist
+%perl_gen_filelist
+</code></pre>
+<p><code>cpanspec</code> can detect documentation based on some heuristics:</p>
+<pre><code>%files -f %{name}.files
+%doc Changes CONTRIBUTING.md examples Makefile.dev README.md
+%license LICENSE
+
+%changelog
+</code></pre>
+<p>Everything is correct! We&rsquo;re done 😃</p>
+<h3 id="conclusion">Conclusion</h3>
+<p>In most cases it is as easy as that. But thanks to the large number of modules,
+there are still many cases where we have to adjust the abstract, license,
+requirements, description etc.</p>
+<h2 id="updating-a-spec-file-for-a-new-version">Updating a spec file for a new version</h2>
+<p>If we didn&rsquo;t have to make manual changes in the original generation, it is as
+easy as this:</p>
+<pre><code>% curl -O https://cpan.metacpan.org/authors/id/T/TI/TINITA/YAML-PP-v0.39.0.tar.gz
+% cpanspec --force --pkgdetails 02packages.details.txt.gz YAML-PP-v0.39.0.tar.gz
+</code></pre>
+<p>The <code>--force</code> switch is needed to automatically overwrite the existing spec
+file.</p>
+<p>Let&rsquo;s look at the diff:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-diff" data-lang="diff"><span class="line"><span class="cl"><span class="gh">diff --git a/perl-YAML-PP.changes b/perl-YAML-PP.changes
+</span></span></span><span class="line"><span class="cl"><span class="gh">index 4fa718b..cc8cbac 100644
+</span></span></span><span class="line"><span class="cl"><span class="gh"></span><span class="gd">--- a/perl-YAML-PP.changes
+</span></span></span><span class="line"><span class="cl"><span class="gd"></span><span class="gi">+++ b/perl-YAML-PP.changes
+</span></span></span><span class="line"><span class="cl"><span class="gi"></span><span class="gu">@@ -1,3 +1,9 @@
+</span></span></span><span class="line"><span class="cl"><span class="gu"></span><span class="gi">+-------------------------------------------------------------------
+</span></span></span><span class="line"><span class="cl"><span class="gi">+Thu Mar 20 14:28:45 UTC 2025 - Tina Müller &lt;tina.mueller@suse.com&gt;
+</span></span></span><span class="line"><span class="cl"><span class="gi">+
+</span></span></span><span class="line"><span class="cl"><span class="gi">+- updated to 0.39.0
+</span></span></span><span class="line"><span class="cl"><span class="gi">+   see /usr/share/doc/packages/perl-YAML-PP/Changes
+</span></span></span><span class="line"><span class="cl"><span class="gi">+
+</span></span></span><span class="line"><span class="cl"><span class="gi"></span> -------------------------------------------------------------------
+</span></span><span class="line"><span class="cl"> Wed Mar 19 14:46:52 UTC 2025 - Tina Müller &lt;tina.mueller@suse.com&gt;
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl"><span class="gh">diff --git a/perl-YAML-PP.spec b/perl-YAML-PP.spec
+</span></span></span><span class="line"><span class="cl"><span class="gh">index a5a54ed..acced96 100644
+</span></span></span><span class="line"><span class="cl"><span class="gh"></span><span class="gd">--- a/perl-YAML-PP.spec
+</span></span></span><span class="line"><span class="cl"><span class="gd"></span><span class="gi">+++ b/perl-YAML-PP.spec
+</span></span></span><span class="line"><span class="cl"><span class="gi"></span><span class="gu">@@ -18,7 +18,7 @@
+</span></span></span><span class="line"><span class="cl"><span class="gu"></span> 
+</span></span><span class="line"><span class="cl"> %define cpan_name YAML-PP
+</span></span><span class="line"><span class="cl"> Name:           perl-YAML-PP
+</span></span><span class="line"><span class="cl"><span class="gd">-Version:        0.38.0
+</span></span></span><span class="line"><span class="cl"><span class="gd"></span><span class="gi">+Version:        0.39.0
+</span></span></span><span class="line"><span class="cl"><span class="gi"></span> Release:        0
+</span></span><span class="line"><span class="cl"> License:        Artistic-1.0 OR GPL-1.0-or-later
+</span></span><span class="line"><span class="cl"> Summary:        YAML 1.2 Processor
+</span></span></code></pre></div><p>That&rsquo;s easy, and if there were any changes like requiring a new module
+or a newer version of it, it would automatically be generated.</p>
+<h2 id="doing-manual-changes">Doing manual changes</h2>
+<p>Let&rsquo;s assume we have to adjust some fields for <code>YAML::PP</code>, because they are
+wrong.</p>
+<p>We could manually adjust the spec file. But then our changes would be
+overwritten with the next version.</p>
+<p>Instead we use a configuration file named <code>cpanspec.yml</code>.</p>
+<h3 id="editing-cpanspecyml">Editing <code>cpanspec.yml</code></h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nn">---</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">patches</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">some-bug-in-0.38.patch</span><span class="p">:</span><span class="w"> </span>-<span class="l">p1</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">summary</span><span class="p">:</span><span class="w"> </span><span class="l">Improved abstract here</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c"># Leftover file in tarball</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">skip_doc</span><span class="p">:</span><span class="w"> </span><span class="l">Makefile.old</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">license</span><span class="p">:</span><span class="w"> </span><span class="l">Actual-license</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c"># A module might have a non-perl dependency</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">preamble</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">BuildRequires</span><span class="p">:</span><span class="w"> </span><span class="l">libfoo</span><span class="w">
+</span></span></span></code></pre></div><p>We can now regenerate the spec, and it will automatically read <code>cpanspec.yml</code>,
+overwrite the fields and add it to the sources:</p>
+<pre><code>% cpanspec --force --skip-changes --pkgdetails 02packages.details.txt.gz YAML-PP-v0.38.0.tar.gz
+</code></pre>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-diff" data-lang="diff"><span class="line"><span class="cl"><span class="gh">diff --git a/perl-YAML-PP.spec b/perl-YAML-PP.spec
+</span></span></span><span class="line"><span class="cl"><span class="gh">index a5a54ed..398ff1a 100644
+</span></span></span><span class="line"><span class="cl"><span class="gh"></span><span class="gd">--- a/perl-YAML-PP.spec
+</span></span></span><span class="line"><span class="cl"><span class="gd"></span><span class="gi">+++ b/perl-YAML-PP.spec
+</span></span></span><span class="line"><span class="cl"><span class="gi"></span><span class="gu">@@ -20,10 +20,13 @@
+</span></span></span><span class="line"><span class="cl"><span class="gu"></span> Name:           perl-YAML-PP
+</span></span><span class="line"><span class="cl"> Version:        0.38.0
+</span></span><span class="line"><span class="cl"> Release:        0
+</span></span><span class="line"><span class="cl"><span class="gd">-License:        Artistic-1.0 OR GPL-1.0-or-later
+</span></span></span><span class="line"><span class="cl"><span class="gd">-Summary:        YAML 1.2 Processor
+</span></span></span><span class="line"><span class="cl"><span class="gd"></span><span class="gi">+#Upstream: Artistic-1.0 or GPL-1.0-or-later
+</span></span></span><span class="line"><span class="cl"><span class="gi">+License:        Actual-license
+</span></span></span><span class="line"><span class="cl"><span class="gi">+Summary:        Improved abstract here
+</span></span></span><span class="line"><span class="cl"><span class="gi"></span> URL:            https://metacpan.org/release/%{cpan_name}
+</span></span><span class="line"><span class="cl"> Source0:        https://cpan.metacpan.org/authors/id/T/TI/TINITA/%{cpan_name}-v%{version}.tar.gz
+</span></span><span class="line"><span class="cl"><span class="gi">+Source1:        cpanspec.yml
+</span></span></span><span class="line"><span class="cl"><span class="gi">+Patch0:         some-bug-in-0.38.patch
+</span></span></span><span class="line"><span class="cl"><span class="gi"></span> BuildArch:      noarch
+</span></span><span class="line"><span class="cl"> BuildRequires:  perl
+</span></span><span class="line"><span class="cl"> BuildRequires:  perl-macros
+</span></span><span class="line"><span class="cl"><span class="gu">@@ -32,6 +35,9 @@ BuildRequires:  perl(Test::More) &gt;= 0.98
+</span></span></span><span class="line"><span class="cl"><span class="gu"></span> BuildRequires:  perl(Test::Warn)
+</span></span><span class="line"><span class="cl"> Requires:       perl(Module::Load)
+</span></span><span class="line"><span class="cl"> %{perl_requires}
+</span></span><span class="line"><span class="cl"><span class="gi">+# MANUAL BEGIN
+</span></span></span><span class="line"><span class="cl"><span class="gi">+BuildRequires:  libfoo
+</span></span></span><span class="line"><span class="cl"><span class="gi">+# MANUAL END
+</span></span></span><span class="line"><span class="cl"><span class="gi"></span>
+</span></span><span class="line"><span class="cl"> %description
+</span></span><span class="line"><span class="cl"> YAML::PP is a modular YAML processor.
+</span></span></code></pre></div><p>There are many more fields you can adjust with this.
+See this <a href="https://github.com/openSUSE/cpanspec/blob/master/cpanspec.yml">example file</a>
+with all supported fields.</p>
+<p>This way we will never have to touch the spec file itself, and it will
+survive any version update.</p>
+<p>(There can be exceptions, when you have to make changes that <code>cpanspec.yml</code>
+does not support, but it&rsquo;s rare.)</p>
+<h2 id="perl-module-versions">Perl Module Versions</h2>
+<p>Perl module versions are a bit special. The traditional versions are simply
+decimals, unlike semantic versions we know from elsewhere. In the example
+above the module used the new version format with two dots and a <code>v</code> in front,
+which behave like we expect from semantic versions.</p>
+<p>In the <a href="../2024-04-how-suse-cpan-modules-are-updated/">article about updating CPAN
+modules</a> I explained it more
+detailed.</p>
+<p><code>cpanspec</code> is currently getting a feature to &ldquo;normalize&rdquo; the old decimal
+versions, but it&rsquo;s not yet released at the time of this writing.</p>
+
+
+        
+          <div class="blog-tags">
+            
+              <a href="https://perlpunk.github.io//tags/software-engineering/">software engineering</a>&nbsp;
+            
+              <a href="https://perlpunk.github.io//tags/perl/">perl</a>&nbsp;
+            
+              <a href="https://perlpunk.github.io//tags/rpm/">rpm</a>&nbsp;
+            
+              <a href="https://perlpunk.github.io//tags/yaml/">yaml</a>&nbsp;
+            
+          </div>
+        
+
+        
+
+        
+      </article>
+
+      
+        <ul class="pager blog-pager">
+          
+            <li class="previous">
+              <a href="https://perlpunk.github.io/posts/2024-05-the-annual-perl-toolchain-summit/" data-toggle="tooltip" data-placement="top" title="The Annual Perl Toolchain Summit">&larr; Previous Post</a>
+            </li>
+          
+          
+        </ul>
+      
+
+
+      
+        
+        
+      
+
+    </div>
+  </div>
+</div>
+
+      
+<footer>
+  <div class="container">
+    
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+          
+          <li>
+            <a href="" title="RSS">
+              <span class="fa-stack fa-lg">
+                <i class="fas fa-circle fa-stack-2x"></i>
+                <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          
+
+          &nbsp;&bull;&nbsp;&copy;
+          
+            2025
+          
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="https://perlpunk.github.io/">Tina&#39;s Blog</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="https://gohugo.io">Hugo v0.131.0</a> powered &nbsp;&bull;&nbsp; Theme <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a> adapted from <a href="https://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer><script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/katex.min.js" integrity="sha384-G0zcxDFp5LWZtDuRMnBkk3EphCK1lhEf4UEyEM693ka574TZGwo4IWwS6QLzM/2t" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
+<script src="https://code.jquery.com/jquery-3.7.0.slim.min.js" integrity="sha384-w5y/xIeYixWvfM+A1cEbmHPURnvyqmVg5eVENruEdDjcyRLUSNej7512JQGspFUr" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+
+<script src="https://perlpunk.github.io/js/main.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js" integrity="sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js" integrity="sha384-m67o7SkQ1ALzKZIFh4CiTA8tmadaujiTa9Vu+nqPSwDOqHrDmxLezTdFln8077+q" crossorigin="anonymous"></script><script src="https://perlpunk.github.io/js/load-photoswipe.js"></script>
+
+
+
+
+
+
+
+
+
+    
+  </body>
+</html>
+
