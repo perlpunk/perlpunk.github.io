@@ -6,8 +6,15 @@
     <description>Recent content in Posts on Tina&#39;s Blog</description>
     <generator>Hugo</generator>
     <language>en</language>
-    <lastBuildDate>Thu, 20 Mar 2025 21:57:40 +0100</lastBuildDate>
+    <lastBuildDate>Thu, 08 May 2025 15:45:58 +0200</lastBuildDate>
     <atom:link href="https://perlpunk.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>The Annual Perl Toolchain Summit 2025</title>
+      <link>https://perlpunk.github.io/posts/2025-05-the-annual-perl-toolchain-summit-2025/</link>
+      <pubDate>Thu, 08 May 2025 15:45:58 +0200</pubDate>
+      <guid>https://perlpunk.github.io/posts/2025-05-the-annual-perl-toolchain-summit-2025/</guid>
+      <description>Introduction The Perl Toolchain Summit is an annual event where around 30-35 people are gathering to work on toolchain related tasks. The topics are the Perl Authors Upload Server, MetaCPAN, CPAN clients, Testing and Coverage modules, Smoketesting Perl, CPAN Security, Cyber Resilience Act, Module Dependencies, and many more.&#xA;This year it took place in Leipzig, Germany from May 1-4.&#xA;It&amp;rsquo;s a mix of discussions, pair programming and presentations. Like in the last years, all attendees were in the same hotel where the conference was happening, so during those four days a useful discussion can start any time.</description>
+    </item>
     <item>
       <title>Generating rpm spec files for Perl Modules</title>
       <link>https://perlpunk.github.io/posts/2025-03-generating-spec-files-for-perl-modules/</link>
